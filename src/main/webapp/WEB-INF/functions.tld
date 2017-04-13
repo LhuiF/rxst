@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+        version="2.0">
+
+    <tlib-version>1.0</tlib-version>
+    <short-name>u</short-name>
+    <uri>http://www.unionx.cn</uri>
+
+    <!-- 数据字典相关方法-->
+    <function>
+        <description>
+            根据字典代码返回字典项列表
+        </description>
+        <name>getDictItem</name>
+        <function-class>com.unionx.core.web.function.DataDictFunction</function-class>
+        <function-signature>java.util.List getDictItem(java.lang.String)</function-signature>
+        <example>
+            <![CDATA[
+                <select>
+                    <c:forEach items="${u:getDictItem('sex')}" var="dictItem">
+                        <option value="${dictItem.code}">${dictItem.name}</option>
+                    </c:forEach>
+                </select>
+            ]]>
+        </example>
+    </function>
+    <function>
+        <description>
+            根据字典code，返回一个json字符串.例如：{"1":"男","2":"女"}
+        </description>
+        <name>getJsonMap</name>
+        <function-class>com.unionx.core.web.function.DataDictFunction</function-class>
+        <function-signature>java.lang.String getJsonMap(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>
+            根据字典code，返回一个json数组。例如:[{"code":"1","name":"男"},{"code":"2","name":"女"}]
+        </description>
+        <name>getJsonArray</name>
+        <function-class>com.unionx.core.web.function.DataDictFunction</function-class>
+        <function-signature>java.lang.String getJsonArray(java.lang.String)</function-signature>
+    </function>
+    <!--END-->
+
+    <function>
+        <description>
+            判断按钮是否有权限
+        </description>
+        <name>hasPermission</name>
+        <function-class>com.unionx.core.web.function.OperationAuthorityFunction</function-class>
+        <function-signature>boolean hasPermission(java.lang.String)</function-signature>
+    </function>
+
+    <!--机构树数据-->
+    <function>
+        <description>
+            返回机构树的json格式数据.格式为easyui的tree数据格式
+        </description>
+        <name>getOrganTreeData</name>
+        <function-class>com.unionx.core.web.function.OrganTreeFunction</function-class>
+        <function-signature>java.lang.String getTreeData()</function-signature>
+    </function>
+    <function>
+        <description>
+            返回机构树的json格式数据.格式为ztree的tree数据格式
+        </description>
+        <name>getOrganZtreeData</name>
+        <function-class>com.unionx.core.web.function.OrganTreeFunction</function-class>
+        <function-signature>java.lang.String getZtreeData()</function-signature>
+    </function>
+    <function>
+        <description>
+            返回机构树id和名字的映射表
+        </description>
+        <name>organIdToNameMap</name>
+        <function-class>com.unionx.core.web.function.OrganTreeFunction</function-class>
+        <function-signature>java.lang.String idToNameMap()</function-signature>
+    </function>
+
+    <!--END-->
+    
+     <!--根据用户id转换为用户姓名-->
+    <function>
+        <description>
+            返回用户id和名字的映射表
+        </description>
+        <name>userIdToName</name>
+        <function-class>com.unionx.core.web.function.OrganTreeFunction</function-class>
+        <function-signature>java.lang.String userIdToName()</function-signature>
+    </function>
+    
+      <!--根据产品id转换产品名称-->
+    <function>
+        <description>
+            返回用户id和名字的映射表
+        </description>
+        <name>produceIdToName</name>
+        <function-class>com.unionx.core.web.function.OrganTreeFunction</function-class>
+        <function-signature>java.lang.String produceIdToName()</function-signature>
+    </function>
+    
+    
+    
+    
+    
+     
+    <function>
+        <description>
+          将是否网申0,1,2转换为对应的是，否，不限字段
+        </description>
+        <name>toApply</name>
+        <function-class>com.unionx.core.web.function.OrganTreeFunction</function-class>
+        <function-signature>java.lang.String toApply()</function-signature>
+    </function>
+    
+    
+     
+    <function>
+        <description>
+          将是否需要材料0,1,2转换为对应的需要，不需要，不限字段
+        </description>
+        <name>toMaterial</name>
+        <function-class>com.unionx.core.web.function.OrganTreeFunction</function-class>
+        <function-signature>java.lang.String toMaterial()</function-signature>
+    </function>
+    
+    
+    
+     <function>
+        <description>
+          将是否包月0,1转换为对应的否，是
+        </description>
+        <name>toBaoYue</name>
+        <function-class>com.unionx.core.web.function.OrganTreeFunction</function-class>
+        <function-signature>java.lang.String toBaoYue()</function-signature>
+    </function>
+    
+    
+     
+    <function>
+        <description>
+          将对任务单0,1转换为对应报增，报减字段
+        </description>
+        <name>toAssign</name>
+        <function-class>com.unionx.core.web.function.OrganTreeFunction</function-class>
+        <function-signature>java.lang.String toAssign()</function-signature>
+    </function>
+    
+    
+    
+    
+    
+    
+    
+    
+    <function>
+        <description>
+            返回产品名称的列表
+        </description>
+        <name>getAllProductName</name>
+        <function-class>com.unionx.core.web.function.RoleFunction</function-class>
+        <function-signature>java.lang.String getAllProductName()</function-signature>
+    </function>
+  
+
+    <!--模块树-->
+    <function>
+        <description>
+            返回模块树的json格式数据.格式为easyui的tree数据格式
+        </description>
+        <name>getModuleTreeData</name>
+        <function-class>com.unionx.core.web.function.ModuleTreeFunction</function-class>
+        <function-signature>java.lang.String getTreeData()</function-signature>
+    </function>
+    <function>
+        <description>
+            返回模块树的json格式数据.格式为ztree的tree数据格式
+        </description>
+        <name>getModuleZtreeData</name>
+        <function-class>com.unionx.core.web.function.ModuleTreeFunction</function-class>
+        <function-signature>java.lang.String getZtreeData(java.lang.String)</function-signature>
+    </function>
+    <!--END-->
+    <!-- 角色 -->
+    <function>
+        <description>
+            返回角色的列表
+        </description>
+        <name>allRole</name>
+        <function-class>com.unionx.core.web.function.RoleFunction</function-class>
+        <function-signature>java.lang.String allRole()</function-signature>
+    </function>
+    
+    
+    <function>
+        <description>
+            返回材料的列表
+        </description>
+        <name>allCaiLiao</name>
+        <function-class>com.unionx.core.web.function.RoleFunction</function-class>
+        <function-signature>java.lang.String allCaiLiao()</function-signature>
+    </function>
+  
+    
+
+    <function>
+        <description>
+            根据岗位编码返回该岗位用户列表
+        </description>
+        <name>getUserListByPost</name>
+        <function-class>com.unionx.core.web.function.UserFunction</function-class>
+        <function-signature>java.lang.String getUserListByPost(java.lang.String)</function-signature>
+    </function>
+
+    <function>
+        <description>
+            根据岗位编码返回该岗位用户列表
+        </description>
+        <name>getUserToPost</name>
+        <function-class>com.unionx.core.web.function.UserFunction</function-class>
+        <function-signature>java.lang.String getUserToPost(java.lang.String)</function-signature>
+    </function>
+
+    <function>
+        <description>
+            人工追踪 返回分类code和名字映射表
+        </description>
+        <name>typeToName</name>
+        <function-class>com.unionx.core.web.function.TrackFunction</function-class>
+        <function-signature>java.lang.String typeToName()</function-signature>
+    </function>
+
+
+    <function>
+        <description>
+            获取店家岗位和一龄用户岗位
+        </description>
+        <name>findPost</name>
+        <function-class>com.unionx.core.web.function.PostFunction</function-class>
+        <function-signature>java.util.List findPost()</function-signature>
+    </function>
+
+    <function>
+        <description>
+            获取店家岗位和一龄用户岗位 map
+        </description>
+        <name>findPostJsonMap</name>
+        <function-class>com.unionx.core.web.function.PostFunction</function-class>
+        <function-signature>java.lang.String findPostJsonMap()</function-signature>
+    </function>
+</taglib>

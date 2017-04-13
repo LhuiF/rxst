@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.unionx.sys.module.dao.ModuleMapper">
+    <resultMap id="BaseResultMap" type="com.unionx.sys.module.vo.Module">
+        <id column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="parent_code" jdbcType="VARCHAR" property="parentCode"/>
+        <result column="order_no" jdbcType="INTEGER" property="orderNo"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="permit_url" jdbcType="VARCHAR" property="permitUrl"/>
+        <result column="sys_code" jdbcType="DECIMAL" property="sysCode"/>
+        <result column="enable" jdbcType="INTEGER" property="enable"/>
+        <result column="icon" jdbcType="VARCHAR" property="icon"/>
+        <result column="sys_type" jdbcType="INTEGER" property="sysType"/>
+    </resultMap>
+
+    <!--获取sysuser按钮 abner-->
+    <select id="getSysUserButtonList" resultType="java.lang.String">
+        SELECT DISTINCT code FROM sys_module
+        WHERE `type` = '2' AND sys_type = '1'
+    </select>
+
+    <!--获取sysuser模块 abner-->
+    <select id="getSysUserModuleList" resultMap="BaseResultMap">
+        SELECT DISTINCT * FROM sys_module
+        WHERE `type` = '1' AND sys_type = '1' ORDER BY order_no
+    </select>
+
+    <!--获取用户id 获取按钮权限 abner-->
+    <select id="getButtonList" resultType="java.lang.String">
+        SELECT DISTINCT sm.code FROM sys_user_role sur
+        JOIN sys_role sr ON sur.role_id = sr.id
+        JOIN sys_role_auth sra ON sr.id = sra.role_id
+        JOIN sys_module sm ON sra.module_code = sm.code
+        WHERE sur.user_id = #{userId,jdbcType=VARCHAR}
+      AND sm.type = '2' AND sm.sys_type = '2' 
+    </select>
+
+    <!--获取用户模块权限用于shiro abner-->
+    <select id="getModuleList" resultMap="BaseResultMap">
+        SELECT DISTINCT sm.* FROM sys_user_role sur
+        JOIN sys_role sr ON sur.role_id = sr.id
+        JOIN sys_role_auth sra ON sr.id = sra.role_id
+        JOIN sys_module sm ON sra.module_code = sm.code
+        WHERE sur.user_id = #{userId,jdbcType=VARCHAR}
+        AND sm.enable = 1 ORDER BY sm.order_no
+        
+       <!--  AND sm.type = '1' AND sm.sys_type = '2' ORDER BY sm.order_no -->
+    </select>
+
+    <select id="getModuleByCode" resultMap="BaseResultMap">
+        SELECT
+            *
+        FROM
+             sys_module
+        WHERE
+            code = #{code,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findAllModule" resultMap="BaseResultMap">
+          SELECT * FROM sys_module where enable=1 order by order_no
+    </select>
+
+    <select id="findAllModuleBySystem" resultMap="BaseResultMap">
+          SELECT * FROM sys_module WHERE sys_type=#{flg,jdbcType=VARCHAR} and enable=1 order by order_no
+    </select>
+
+    <select id="getRoleAuthByRoleId" resultMap="BaseResultMap">
+        SELECT sm.* from sys_role_auth sra
+        INNER JOIN sys_module sm ON sra.module_code=sm.`code`
+        WHERE sra.role_id= #{roleId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getStoreModuleByRoleId" resultMap="BaseResultMap">
+        SELECT sm.* from store_role_auth sra
+        LEFT JOIN sys_module sm ON sra.module_code=sm.`code`
+        WHERE sra.role_id= #{roleId,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteModule">
+        DELETE
+        FROM
+             sys_module
+        WHERE
+            code = #{code,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="saveModule" parameterType="com.unionx.sys.module.vo.Module" >
+        INSERT INTO sys_module
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="code != null" >
+                code,
+            </if>
+            <if test="name != null" >
+                name,
+            </if>
+            <if test="url != null" >
+                url,
+            </if>
+            <if test="parentCode != null" >
+                parent_code,
+            </if>
+            <if test="orderNo != null" >
+                order_no,
+            </if>
+            <if test="type != null" >
+                type,
+            </if>
+            <if test="permitUrl != null" >
+                permit_url,
+            </if>
+            <if test="sysCode != null" >
+                sys_code,
+            </if>
+            <if test="enable != null" >
+                enable,
+            </if>
+            <if test="icon != null" >
+                icon,
+            </if>
+            <if test="sysType != null" >
+                sys_type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="code != null" >
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null" >
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="parentCode != null" >
+                #{parentCode,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNo != null" >
+                #{orderNo,jdbcType=INTEGER},
+            </if>
+            <if test="type != null" >
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="permitUrl != null" >
+                #{permitUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="sysCode != null" >
+                #{sysCode,jdbcType=DECIMAL},
+            </if>
+            <if test="enable != null" >
+                #{enable,jdbcType=INTEGER},
+            </if>
+            <if test="icon != null" >
+                #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="sysType != null" >
+                #{sysType,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateModule" parameterType="com.unionx.sys.module.vo.Module" >
+        UPDATE sys_module
+        <set>
+            <if test="code != null" >
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null" >
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="parentCode != null" >
+                parent_code = #{parentCode,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNo != null" >
+                order_no = #{orderNo,jdbcType=INTEGER},
+            </if>
+            <if test="type != null" >
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="permitUrl != null" >
+                permit_url = #{permitUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="sysCode != null" >
+                sys_code = #{sysCode,jdbcType=DECIMAL},
+            </if>
+            <if test="enable != null" >
+                enable = #{enable,jdbcType=INTEGER},
+            </if>
+            <if test="icon != null" >
+                icon = #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="sysType != null" >
+                sys_type = #{sysType,jdbcType=INTEGER},
+            </if>
+        </set>
+        WHERE
+            code = #{code,jdbcType=VARCHAR}
+    </update>
+</mapper>

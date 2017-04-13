@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.unionx.web.calculator.dao.CalculatorMapper">
+  <resultMap id="BaseResultMap" type="com.unionx.web.insurance.vo.RsInsuranceProportion">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="insurance_uuid" jdbcType="VARCHAR" property="insuranceUuid" />
+    <result column="dict_code" jdbcType="VARCHAR" property="dictCode" />
+    <result column="dict_name" jdbcType="VARCHAR" property="dictName" />
+    <result column="proportion_detail" jdbcType="VARCHAR" property="proportionDetail" />
+    <result column="isdel" jdbcType="BIT" property="isdel" />
+    <result column="create_name" jdbcType="VARCHAR" property="createName" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_name" jdbcType="VARCHAR" property="updateName" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+  </resultMap>
+  
+  <resultMap id="BaseFundMap" type="com.unionx.web.accumulation.vo.RsAccumulationFund">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="dict_code" jdbcType="VARCHAR" property="dictCode" />
+    <result column="dict_name" jdbcType="VARCHAR" property="dictName" />
+    <result column="fund_year" jdbcType="VARCHAR" property="fundYear" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="clear_month" jdbcType="VARCHAR" property="clearMonth" />
+    <result column="average_pay" jdbcType="DECIMAL" property="averagePay" />
+    <result column="ceiling" jdbcType="VARCHAR" property="ceiling" />
+    <result column="ceiling_base" jdbcType="VARCHAR" property="ceilingBase" />
+    <result column="floor_base" jdbcType="VARCHAR" property="floorBase" />
+    <result column="year_city" jdbcType="VARCHAR" property="yearCity" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="isdel" jdbcType="BIT" property="isdel" />
+    <result column="create_name" jdbcType="VARCHAR" property="createName" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_name" jdbcType="VARCHAR" property="updateName" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+  </resultMap>
+  
+   <resultMap id="BaseAccumulationFundtMap" type="com.unionx.web.accumulation.vo.RsAccumulationFundProportion">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="accumulation_fund_uuid" jdbcType="VARCHAR" property="accumulationFundUuid" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="enterprise" jdbcType="VARCHAR" property="enterprise" />
+    <result column="personal_not_floor" jdbcType="VARCHAR" property="personalNotFloor" />
+    <result column="personal_floor" jdbcType="VARCHAR" property="personalFloor" />
+    <result column="isdel" jdbcType="BIT" property="isdel" />
+    <result column="create_name" jdbcType="VARCHAR" property="createName" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_name" jdbcType="VARCHAR" property="updateName" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+  </resultMap>
+  
+  <resultMap id="getAllCityResult"   type="HashMap">  
+    <result property="name" column="name" />  
+    <result property="code" column="code" />  
+  </resultMap> 
+  
+    <select id="getBase" parameterType="com.unionx.web.calculator.vo.RequestVo" resultType="com.unionx.web.calculator.vo.Base">
+		  SELECT
+			i.uuid,
+			i.dict_code AS cityCode,
+			i.year_city AS yearCity,
+			b.dict_code AS dictCode,
+			b.dict_name AS dictName,
+			b.ceiling_base AS ceilingBase,
+			b.floor_base AS floorBase
+		FROM
+			rs_insurance i
+		LEFT JOIN rs_insurance_base b ON i.uuid = b.insurance_uuid
+		WHERE
+			i.isdel = 0
+		AND i.dict_code = #{cityCode}
+		AND i.start_time  <![CDATA[<=]]> #{paymentDate} 
+		AND i.end_time >= #{paymentDate}
+  </select>
+  
+  <select id="getInsuranceProportionByUuid" parameterType="String" resultMap="BaseResultMap">
+  SELECT * FROM rs_insurance_proportion WHERE isdel = 0
+ 	AND insurance_uuid = #{id}
+  </select>
+  
+  <select id="getFundBase" parameterType="com.unionx.web.calculator.vo.RequestVo" resultMap="BaseFundMap">
+		SELECT
+			*
+		FROM
+			rs_accumulation_fund a
+		WHERE
+			isdel = 0
+		AND dict_code = #{cityCode}
+		AND start_time  <![CDATA[<=]]> #{paymentDate} 
+		AND end_time >= #{paymentDate}
+  </select>
+  
+  <select id="getAccumulationFundProportion" parameterType="String" resultMap="BaseAccumulationFundtMap">
+  SELECT * FROM rs_accumulation_fund_proportion WHERE accumulation_fund_uuid = #{id} AND isdel = 0
+  </select>
+  
+  <select id="getCity" resultMap="getAllCityResult">
+  	SELECT code,name FROM sys_dict_item WHERE data_dict_code = 20025
+  </select>
+</mapper>

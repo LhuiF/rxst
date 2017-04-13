@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.unionx.web.archive.dao.RsConditionArchiveMapper">
+  <resultMap id="BaseResultMap" type="com.unionx.web.archive.vo.RsConditionArchive">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="produt_uuid" jdbcType="VARCHAR" property="produtUuid" />
+    <result column="produt_name" jdbcType="VARCHAR" property="produtName" />
+    <result column="is_online_apply" jdbcType="CHAR" property="isOnlineApply" />
+    <result column="isdel" jdbcType="CHAR" property="isdel" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_name" jdbcType="VARCHAR" property="createName" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_name" jdbcType="VARCHAR" property="updateName" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, produt_uuid, produt_name, is_online_apply, isdel, remark, create_name, 
+    create_date, update_name, update_date
+  </sql>
+  <select id="selectByExample" parameterType="com.unionx.web.archive.vo.RsConditionArchiveCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from rs_condition_archive
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rs_condition_archive
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from rs_condition_archive
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.unionx.web.archive.vo.RsConditionArchiveCriteria">
+    delete from rs_condition_archive
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.unionx.web.archive.vo.RsConditionArchive">
+    insert into rs_condition_archive (id, produt_uuid, produt_name, 
+       is_online_apply, isdel, 
+      remark, create_name, create_date, 
+      update_name, update_date)
+    values (#{id,jdbcType=INTEGER}, #{produtUuid,jdbcType=VARCHAR}, #{produtName,jdbcType=VARCHAR}, 
+       #{isOnlineApply,jdbcType=CHAR}, #{isdel,jdbcType=CHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{createName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateName,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.unionx.web.archive.vo.RsConditionArchive" useGeneratedKeys="true" keyProperty="id">
+    insert into rs_condition_archive
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="produtUuid != null">
+        produt_uuid,
+      </if>
+      <if test="produtName != null">
+        produt_name,
+      </if>
+      <if test="isOnlineApply != null">
+        is_online_apply,
+      </if>
+      <if test="isdel != null">
+        isdel,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createName != null">
+        create_name,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateName != null">
+        update_name,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="produtUuid != null">
+        #{produtUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="produtName != null">
+        #{produtName,jdbcType=VARCHAR},
+      </if>
+      <if test="isOnlineApply != null">
+        #{isOnlineApply,jdbcType=CHAR},
+      </if>
+      <if test="isdel != null">
+        #{isdel,jdbcType=CHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.unionx.web.archive.vo.RsConditionArchiveCriteria" resultType="java.lang.Long">
+    select count(*) from rs_condition_archive
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update rs_condition_archive
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.produtUuid != null">
+        produt_uuid = #{record.produtUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.produtName != null">
+        produt_name = #{record.produtName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isOnlineApply != null">
+        is_online_apply = #{record.isOnlineApply,jdbcType=CHAR},
+      </if>
+      <if test="record.isdel != null">
+        isdel = #{record.isdel,jdbcType=CHAR},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createName != null">
+        create_name = #{record.createName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateName != null">
+        update_name = #{record.updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateDate != null">
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update rs_condition_archive
+    set id = #{record.id,jdbcType=INTEGER},
+      produt_uuid = #{record.produtUuid,jdbcType=VARCHAR},
+      produt_name = #{record.produtName,jdbcType=VARCHAR},
+      is_online_apply = #{record.isOnlineApply,jdbcType=CHAR},
+      isdel = #{record.isdel,jdbcType=CHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      create_name = #{record.createName,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      update_name = #{record.updateName,jdbcType=VARCHAR},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.unionx.web.archive.vo.RsConditionArchive">
+    update rs_condition_archive
+    <set>
+      <if test="produtUuid != null">
+        produt_uuid = #{produtUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="produtName != null">
+        produt_name = #{produtName,jdbcType=VARCHAR},
+      </if>
+      <if test="isOnlineApply != null">
+        is_online_apply = #{isOnlineApply,jdbcType=CHAR},
+      </if>
+      <if test="isdel != null">
+        isdel = #{isdel,jdbcType=CHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        update_name = #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.unionx.web.archive.vo.RsConditionArchive">
+    update rs_condition_archive
+    set produt_uuid = #{produtUuid,jdbcType=VARCHAR},
+      produt_name = #{produtName,jdbcType=VARCHAR},
+      is_online_apply = #{isOnlineApply,jdbcType=CHAR},
+      isdel = #{isdel,jdbcType=CHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_name = #{createName,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_name = #{updateName,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <!-- 返回条件档案数据列表 -->
+  <select id="getConditionArchiveList" parameterType="com.unionx.web.archive.vo.RsConditionArchive" resultMap="BaseResultMap">
+  		select
+			*
+		from
+			rs_condition_archive
+		where 
+			isdel='0'
+		<if test="isOnlineApply!=null and isOnlineApply!=''">
+        and is_online_apply = #{isOnlineApply}	
+		</if>
+		<if test="produtName!=null and produtName!=''">	
+		and produt_name like CONCAT('%', #{produtName}, '%')
+        </if>
+	
+		order by update_date desc
+  </select>
+  <!-- 根据条件查询数据信息 -->
+  <select id="getArchiveByName" parameterType="com.unionx.web.archive.vo.RsConditionArchive"
+		resultMap="BaseResultMap">
+  		select
+			id,
+			produt_name as produtName,
+			is_online_apply as isOnlineApply,
+			remark,
+			create_name as createName,
+			create_date as createDate,
+			update_name as updateName,
+			update_date as updateDate			
+		from rs_condition_archive
+		where 
+			isdel='0' 
+		and
+			is_online_apply = #{isOnlineApply}
+		and
+			produt_name like CONCAT('%', #{produtName}, '%')
+  </select>
+ <!-- 根据id删除对应的信息(逻辑删除) -->
+	<update id="deleteById" parameterType="com.unionx.web.archive.vo.RsConditionArchive" >
+		update
+		rs_condition_archive
+		set isdel='1'
+		where id=#{id}
+	</update>
+<!-- 根据id获取对应数据信息 -->
+	<select id="getArchiveById" parameterType="int" resultMap="BaseResultMap">
+		select
+			<include refid="Base_Column_List" />
+		FROM 
+			rs_condition_archive
+		WHERE
+			ISDEL='0'
+			AND id=#{id}
+	</select>
+	
+	<select id="getConditions" parameterType="String" resultType="String">
+		select `condition` from rs_condition a
+		join rs_condition_archive b on b.id = a.situation_uuid
+		join sys_product c on c.id = b.produt_uuid
+		where b.produt_uuid = #{productId}
+	</select>
+</mapper>

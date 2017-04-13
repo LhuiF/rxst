@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.unionx.web.employee.dao.RsAnnexMapper">
+  <resultMap id="BaseResultMap" type="com.unionx.web.employee.vo.Annex">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="ID_front" jdbcType="VARCHAR" property="idFront" />
+    <result column="ID_back" jdbcType="VARCHAR" property="idBack" />
+    <result column="account_home" jdbcType="VARCHAR" property="accountHome" />
+    <result column="account_back" jdbcType="VARCHAR" property="accountBack" />
+    <result column="employee_id" jdbcType="VARCHAR" property="employeeId" />
+    <result column="isdel" jdbcType="VARCHAR" property="isdel" />
+    <result column="create_name" jdbcType="VARCHAR" property="createName" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_name" jdbcType="VARCHAR" property="updateName" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, ID_front, ID_back, account_home, account_back, employee_id, isdel, create_name, 
+    create_date, update_name, update_date
+  </sql>
+  <select id="selectByExample" parameterType="com.unionx.web.employee.po.RsAnnexCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from rs_annex
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rs_annex
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from rs_annex
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.unionx.web.employee.po.RsAnnexCriteria">
+    delete from rs_annex
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.unionx.web.employee.vo.Annex">
+    insert into rs_annex (id, ID_front, ID_back, 
+      account_home, account_back, employee_id, 
+      isdel, create_name, create_date, 
+      update_name, update_date)
+    values (#{id,jdbcType=VARCHAR}, #{idFront,jdbcType=VARCHAR}, #{idBack,jdbcType=VARCHAR}, 
+      #{accountHome,jdbcType=VARCHAR}, #{accountBack,jdbcType=VARCHAR}, #{employeeId,jdbcType=VARCHAR}, 
+      #{isdel,jdbcType=VARCHAR}, #{createName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateName,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.unionx.web.employee.vo.Annex">
+    insert into rs_annex
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="idFront != null">
+        ID_front,
+      </if>
+      <if test="idBack != null">
+        ID_back,
+      </if>
+      <if test="accountHome != null">
+        account_home,
+      </if>
+      <if test="accountBack != null">
+        account_back,
+      </if>
+      <if test="employeeId != null">
+        employee_id,
+      </if>
+      <if test="isdel != null">
+        isdel,
+      </if>
+      <if test="createName != null">
+        create_name,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateName != null">
+        update_name,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="idFront != null">
+        #{idFront,jdbcType=VARCHAR},
+      </if>
+      <if test="idBack != null">
+        #{idBack,jdbcType=VARCHAR},
+      </if>
+      <if test="accountHome != null">
+        #{accountHome,jdbcType=VARCHAR},
+      </if>
+      <if test="accountBack != null">
+        #{accountBack,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null">
+        #{employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null">
+        #{isdel,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.unionx.web.employee.po.RsAnnexCriteria" resultType="java.lang.Long">
+    select count(*) from rs_annex
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update rs_annex
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idFront != null">
+        ID_front = #{record.idFront,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idBack != null">
+        ID_back = #{record.idBack,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountHome != null">
+        account_home = #{record.accountHome,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountBack != null">
+        account_back = #{record.accountBack,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeId != null">
+        employee_id = #{record.employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isdel != null">
+        isdel = #{record.isdel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createName != null">
+        create_name = #{record.createName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateName != null">
+        update_name = #{record.updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateDate != null">
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update rs_annex
+    set id = #{record.id,jdbcType=VARCHAR},
+      ID_front = #{record.idFront,jdbcType=VARCHAR},
+      ID_back = #{record.idBack,jdbcType=VARCHAR},
+      account_home = #{record.accountHome,jdbcType=VARCHAR},
+      account_back = #{record.accountBack,jdbcType=VARCHAR},
+      employee_id = #{record.employeeId,jdbcType=VARCHAR},
+      isdel = #{record.isdel,jdbcType=VARCHAR},
+      create_name = #{record.createName,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      update_name = #{record.updateName,jdbcType=VARCHAR},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.unionx.web.employee.vo.Annex">
+    update rs_annex
+    <set>
+      <if test="idFront != null">
+        ID_front = #{idFront,jdbcType=VARCHAR},
+      </if>
+      <if test="idBack != null">
+        ID_back = #{idBack,jdbcType=VARCHAR},
+      </if>
+      <if test="accountHome != null">
+        account_home = #{accountHome,jdbcType=VARCHAR},
+      </if>
+      <if test="accountBack != null">
+        account_back = #{accountBack,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null">
+        employee_id = #{employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null">
+        isdel = #{isdel,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        update_name = #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.unionx.web.employee.vo.Annex">
+    update rs_annex
+    set ID_front = #{idFront,jdbcType=VARCHAR},
+      ID_back = #{idBack,jdbcType=VARCHAR},
+      account_home = #{accountHome,jdbcType=VARCHAR},
+      account_back = #{accountBack,jdbcType=VARCHAR},
+      employee_id = #{employeeId,jdbcType=VARCHAR},
+      isdel = #{isdel,jdbcType=VARCHAR},
+      create_name = #{createName,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_name = #{updateName,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+    <update id="deleByKey" parameterType="java.lang.String">
+    update rs_annex
+    set 
+      isdel = '1'
+    where employee_id = #{id}
+  </update>
+  
+</mapper>

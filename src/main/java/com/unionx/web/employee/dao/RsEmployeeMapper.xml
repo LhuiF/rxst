@@ -1,0 +1,682 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.unionx.web.employee.dao.RsEmployeeMapper">
+  <resultMap id="BaseResultMap" type="com.unionx.web.employee.vo.Employee">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="employee_name" jdbcType="VARCHAR" property="employeeName" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="paper_work_type" jdbcType="VARCHAR" property="paperWorkType" />
+    <result column="paper_work_code" jdbcType="VARCHAR" property="paperWorkCode" />
+    <result column="birth_date" jdbcType="TIMESTAMP" property="birthDate" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="nation" jdbcType="VARCHAR" property="nation" />
+    <result column="native_place" jdbcType="VARCHAR" property="nativePlace" />
+    <result column="educational_level" jdbcType="VARCHAR" property="educationalLevel" />
+    <result column="country_region" jdbcType="VARCHAR" property="countryRegion" />
+    <result column="personal_identity" jdbcType="VARCHAR" property="personalIdentity" />
+    <result column="citizen_ID_code" jdbcType="VARCHAR" property="citizenIdCode" />
+    <result column="account_nature" jdbcType="VARCHAR" property="accountNature" />
+    <result column="account_address" jdbcType="VARCHAR" property="accountAddress" />
+    <result column="account_zip_code" jdbcType="VARCHAR" property="accountZipCode" />
+    <result column="log_photo" jdbcType="VARCHAR" property="logPhoto" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="address_zip_code" jdbcType="VARCHAR" property="addressZipCode" />
+    <result column="tele" jdbcType="VARCHAR" property="tele" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="enterprise_id" jdbcType="VARCHAR" property="enterpriseId" />
+    <result column="enterprise_name" jdbcType="VARCHAR" property="enterpriseName" />
+    <result column="job_number" jdbcType="VARCHAR" property="jobNumber" />
+    <result column="join_work" jdbcType="TIMESTAMP" property="joinWork" />
+    <result column="ex_passport_code" jdbcType="VARCHAR" property="exPassportCode" />
+    <result column="ex_permit_code" jdbcType="VARCHAR" property="exPermitCode" />
+    <result column="isdel" jdbcType="VARCHAR" property="isdel" />
+    <result column="create_name" jdbcType="VARCHAR" property="createName" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_name" jdbcType="VARCHAR" property="updateName" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, employee_name, sex, paper_work_type, paper_work_code, birth_date, age, nation, 
+    native_place, educational_level, country_region, personal_identity, citizen_ID_code, 
+    account_nature, account_address, account_zip_code, log_photo, address, address_zip_code, 
+    tele, email, enterprise_id, enterprise_name, job_number, join_work, ex_passport_code, 
+    ex_permit_code, isdel, create_name, create_date, update_name, update_date
+  </sql>
+  <select id="selectByExample" parameterType="com.unionx.web.employee.po.RsEmployeeCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from rs_employee
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rs_employee
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from rs_employee
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.unionx.web.employee.po.RsEmployeeCriteria">
+    delete from rs_employee
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.unionx.web.employee.vo.Employee">
+    insert into rs_employee (id, employee_name, sex, 
+      paper_work_type, paper_work_code, birth_date, 
+      age, nation, native_place, 
+      educational_level, country_region, personal_identity, 
+      citizen_ID_code, account_nature, account_address, 
+      account_zip_code, log_photo, address, 
+      address_zip_code, tele, email, 
+      enterprise_id, enterprise_name, job_number, 
+      join_work, ex_passport_code, ex_permit_code, 
+      isdel, create_name, create_date, 
+      update_name, update_date)
+    values (#{id,jdbcType=VARCHAR}, #{employeeName,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{paperWorkType,jdbcType=VARCHAR}, #{paperWorkCode,jdbcType=VARCHAR}, #{birthDate,jdbcType=TIMESTAMP}, 
+      #{age,jdbcType=INTEGER}, #{nation,jdbcType=VARCHAR}, #{nativePlace,jdbcType=VARCHAR}, 
+      #{educationalLevel,jdbcType=VARCHAR}, #{countryRegion,jdbcType=VARCHAR}, #{personalIdentity,jdbcType=VARCHAR}, 
+      #{citizenIdCode,jdbcType=VARCHAR}, #{accountNature,jdbcType=VARCHAR}, #{accountAddress,jdbcType=VARCHAR}, 
+      #{accountZipCode,jdbcType=VARCHAR}, #{logPhoto,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{addressZipCode,jdbcType=VARCHAR}, #{tele,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{enterpriseId,jdbcType=VARCHAR}, #{enterpriseName,jdbcType=VARCHAR}, #{jobNumber,jdbcType=VARCHAR}, 
+      #{joinWork,jdbcType=TIMESTAMP}, #{exPassportCode,jdbcType=VARCHAR}, #{exPermitCode,jdbcType=VARCHAR}, 
+      #{isdel,jdbcType=VARCHAR}, #{createName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateName,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.unionx.web.employee.vo.Employee">
+    insert into rs_employee
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="employeeName != null">
+        employee_name,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="paperWorkType != null">
+        paper_work_type,
+      </if>
+      <if test="paperWorkCode != null">
+        paper_work_code,
+      </if>
+      <if test="birthDate != null">
+        birth_date,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="nation != null">
+        nation,
+      </if>
+      <if test="nativePlace != null">
+        native_place,
+      </if>
+      <if test="educationalLevel != null">
+        educational_level,
+      </if>
+      <if test="countryRegion != null">
+        country_region,
+      </if>
+      <if test="personalIdentity != null">
+        personal_identity,
+      </if>
+      <if test="citizenIdCode != null">
+        citizen_ID_code,
+      </if>
+      <if test="accountNature != null">
+        account_nature,
+      </if>
+      <if test="accountAddress != null">
+        account_address,
+      </if>
+      <if test="accountZipCode != null">
+        account_zip_code,
+      </if>
+      <if test="logPhoto != null">
+        log_photo,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="addressZipCode != null">
+        address_zip_code,
+      </if>
+      <if test="tele != null">
+        tele,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="enterpriseId != null">
+        enterprise_id,
+      </if>
+      <if test="enterpriseName != null">
+        enterprise_name,
+      </if>
+      <if test="jobNumber != null">
+        job_number,
+      </if>
+      <if test="joinWork != null">
+        join_work,
+      </if>
+      <if test="exPassportCode != null">
+        ex_passport_code,
+      </if>
+      <if test="exPermitCode != null">
+        ex_permit_code,
+      </if>
+      <if test="isdel != null">
+        isdel,
+      </if>
+      <if test="createName != null">
+        create_name,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateName != null">
+        update_name,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeName != null">
+        #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="paperWorkType != null">
+        #{paperWorkType,jdbcType=VARCHAR},
+      </if>
+      <if test="paperWorkCode != null">
+        #{paperWorkCode,jdbcType=VARCHAR},
+      </if>
+      <if test="birthDate != null">
+        #{birthDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="nation != null">
+        #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="nativePlace != null">
+        #{nativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="educationalLevel != null">
+        #{educationalLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="countryRegion != null">
+        #{countryRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="personalIdentity != null">
+        #{personalIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="citizenIdCode != null">
+        #{citizenIdCode,jdbcType=VARCHAR},
+      </if>
+      <if test="accountNature != null">
+        #{accountNature,jdbcType=VARCHAR},
+      </if>
+      <if test="accountAddress != null">
+        #{accountAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="accountZipCode != null">
+        #{accountZipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="logPhoto != null">
+        #{logPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="addressZipCode != null">
+        #{addressZipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tele != null">
+        #{tele,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseId != null">
+        #{enterpriseId,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseName != null">
+        #{enterpriseName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobNumber != null">
+        #{jobNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="joinWork != null">
+        #{joinWork,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exPassportCode != null">
+        #{exPassportCode,jdbcType=VARCHAR},
+      </if>
+      <if test="exPermitCode != null">
+        #{exPermitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null">
+        #{isdel,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.unionx.web.employee.po.RsEmployeeCriteria" resultType="java.lang.Long">
+    select count(*) from rs_employee
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update rs_employee
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeName != null">
+        employee_name = #{record.employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paperWorkType != null">
+        paper_work_type = #{record.paperWorkType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paperWorkCode != null">
+        paper_work_code = #{record.paperWorkCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthDate != null">
+        birth_date = #{record.birthDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.age != null">
+        age = #{record.age,jdbcType=INTEGER},
+      </if>
+      <if test="record.nation != null">
+        nation = #{record.nation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nativePlace != null">
+        native_place = #{record.nativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.educationalLevel != null">
+        educational_level = #{record.educationalLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.countryRegion != null">
+        country_region = #{record.countryRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personalIdentity != null">
+        personal_identity = #{record.personalIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.citizenIdCode != null">
+        citizen_ID_code = #{record.citizenIdCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountNature != null">
+        account_nature = #{record.accountNature,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountAddress != null">
+        account_address = #{record.accountAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountZipCode != null">
+        account_zip_code = #{record.accountZipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logPhoto != null">
+        log_photo = #{record.logPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addressZipCode != null">
+        address_zip_code = #{record.addressZipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tele != null">
+        tele = #{record.tele,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enterpriseId != null">
+        enterprise_id = #{record.enterpriseId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enterpriseName != null">
+        enterprise_name = #{record.enterpriseName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobNumber != null">
+        job_number = #{record.jobNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.joinWork != null">
+        join_work = #{record.joinWork,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.exPassportCode != null">
+        ex_passport_code = #{record.exPassportCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exPermitCode != null">
+        ex_permit_code = #{record.exPermitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isdel != null">
+        isdel = #{record.isdel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createName != null">
+        create_name = #{record.createName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateName != null">
+        update_name = #{record.updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateDate != null">
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update rs_employee
+    set id = #{record.id,jdbcType=VARCHAR},
+      employee_name = #{record.employeeName,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      paper_work_type = #{record.paperWorkType,jdbcType=VARCHAR},
+      paper_work_code = #{record.paperWorkCode,jdbcType=VARCHAR},
+      birth_date = #{record.birthDate,jdbcType=TIMESTAMP},
+      age = #{record.age,jdbcType=INTEGER},
+      nation = #{record.nation,jdbcType=VARCHAR},
+      native_place = #{record.nativePlace,jdbcType=VARCHAR},
+      educational_level = #{record.educationalLevel,jdbcType=VARCHAR},
+      country_region = #{record.countryRegion,jdbcType=VARCHAR},
+      personal_identity = #{record.personalIdentity,jdbcType=VARCHAR},
+      citizen_ID_code = #{record.citizenIdCode,jdbcType=VARCHAR},
+      account_nature = #{record.accountNature,jdbcType=VARCHAR},
+      account_address = #{record.accountAddress,jdbcType=VARCHAR},
+      account_zip_code = #{record.accountZipCode,jdbcType=VARCHAR},
+      log_photo = #{record.logPhoto,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      address_zip_code = #{record.addressZipCode,jdbcType=VARCHAR},
+      tele = #{record.tele,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      enterprise_id = #{record.enterpriseId,jdbcType=VARCHAR},
+      enterprise_name = #{record.enterpriseName,jdbcType=VARCHAR},
+      job_number = #{record.jobNumber,jdbcType=VARCHAR},
+      join_work = #{record.joinWork,jdbcType=TIMESTAMP},
+      ex_passport_code = #{record.exPassportCode,jdbcType=VARCHAR},
+      ex_permit_code = #{record.exPermitCode,jdbcType=VARCHAR},
+      isdel = #{record.isdel,jdbcType=VARCHAR},
+      create_name = #{record.createName,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      update_name = #{record.updateName,jdbcType=VARCHAR},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.unionx.web.employee.vo.Employee">
+    update rs_employee
+    <set>
+      <if test="employeeName != null">
+        employee_name = #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="paperWorkType != null">
+        paper_work_type = #{paperWorkType,jdbcType=VARCHAR},
+      </if>
+      <if test="paperWorkCode != null">
+        paper_work_code = #{paperWorkCode,jdbcType=VARCHAR},
+      </if>
+      <if test="birthDate != null">
+        birth_date = #{birthDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="nation != null">
+        nation = #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="nativePlace != null">
+        native_place = #{nativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="educationalLevel != null">
+        educational_level = #{educationalLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="countryRegion != null">
+        country_region = #{countryRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="personalIdentity != null">
+        personal_identity = #{personalIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="citizenIdCode != null">
+        citizen_ID_code = #{citizenIdCode,jdbcType=VARCHAR},
+      </if>
+      <if test="accountNature != null">
+        account_nature = #{accountNature,jdbcType=VARCHAR},
+      </if>
+      <if test="accountAddress != null">
+        account_address = #{accountAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="accountZipCode != null">
+        account_zip_code = #{accountZipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="logPhoto != null">
+        log_photo = #{logPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="addressZipCode != null">
+        address_zip_code = #{addressZipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tele != null">
+        tele = #{tele,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseId != null">
+        enterprise_id = #{enterpriseId,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseName != null">
+        enterprise_name = #{enterpriseName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobNumber != null">
+        job_number = #{jobNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="joinWork != null">
+        join_work = #{joinWork,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exPassportCode != null">
+        ex_passport_code = #{exPassportCode,jdbcType=VARCHAR},
+      </if>
+      <if test="exPermitCode != null">
+        ex_permit_code = #{exPermitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null">
+        isdel = #{isdel,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        update_name = #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.unionx.web.employee.vo.Employee">
+    update rs_employee
+    set employee_name = #{employeeName,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      paper_work_type = #{paperWorkType,jdbcType=VARCHAR},
+      paper_work_code = #{paperWorkCode,jdbcType=VARCHAR},
+      birth_date = #{birthDate,jdbcType=TIMESTAMP},
+      age = #{age,jdbcType=INTEGER},
+      nation = #{nation,jdbcType=VARCHAR},
+      native_place = #{nativePlace,jdbcType=VARCHAR},
+      educational_level = #{educationalLevel,jdbcType=VARCHAR},
+      country_region = #{countryRegion,jdbcType=VARCHAR},
+      personal_identity = #{personalIdentity,jdbcType=VARCHAR},
+      citizen_ID_code = #{citizenIdCode,jdbcType=VARCHAR},
+      account_nature = #{accountNature,jdbcType=VARCHAR},
+      account_address = #{accountAddress,jdbcType=VARCHAR},
+      account_zip_code = #{accountZipCode,jdbcType=VARCHAR},
+      log_photo = #{logPhoto,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      address_zip_code = #{addressZipCode,jdbcType=VARCHAR},
+      tele = #{tele,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      enterprise_id = #{enterpriseId,jdbcType=VARCHAR},
+      enterprise_name = #{enterpriseName,jdbcType=VARCHAR},
+      job_number = #{jobNumber,jdbcType=VARCHAR},
+      join_work = #{joinWork,jdbcType=TIMESTAMP},
+      ex_passport_code = #{exPassportCode,jdbcType=VARCHAR},
+      ex_permit_code = #{exPermitCode,jdbcType=VARCHAR},
+      isdel = #{isdel,jdbcType=VARCHAR},
+      create_name = #{createName,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_name = #{updateName,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectByService" parameterType="com.unionx.web.employee.vo.Employee" resultType="com.unionx.web.employee.vo.EmployeeInfo">
+    SELECT
+		em.id,
+		em.employee_name as  employeeName,
+		em.enterprise_name as enterpriseName,
+		em.paper_work_code as paperWorkCode,
+		ss.ss_declare_date as ssDeclareDate,
+		ss.ss_start_date as ssStartDate,
+		ss.ss_people_type as ssPeopleType,
+		ss.pf_declare_date as pfDeclareDate,
+		ss.pf_start_date as  pfStartDate,
+		ss.mt_people_type as  mtPeopleType,
+		ss.average_wage as  averageWage,
+		ss.ss_wage as ssWage,
+		ss.pf_wage as pfWage,
+		five.pension,
+		five.unemployment,
+		five.fertility,
+		five.work_injury as  workInjury,
+		five.medical_treatment as  medicalTreatment,
+		five.provident_fund as providentFund
+	FROM
+		rs_employee em
+	LEFT JOIN rs_ss_fundinfo ss ON em.id = ss.employee_id
+	LEFT JOIN rs_five_risks five ON em.id = five.employee_id
+	where em.isdel='0'
+	 <if test="paperWorkCode != null">
+        AND paper_work_code=#{paperWorkCode} 
+      </if>
+      <if test="enterpriseId != null">
+        AND enterprise_name = #{enterpriseName}
+      </if>
+      <if test="employeeName != null">
+        AND employee_name = #{employeeName}
+      </if>
+  </select>
+   <update id="deleByKey" parameterType="java.lang.String">
+    update rs_employee
+    set 
+      isdel = '1'
+    where id = #{id}
+  </update>
+  
+</mapper>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.unionx.sys.role.dao.RoleMapper">
+    <resultMap id="BaseResultMap" type="com.unionx.sys.role.vo.Role">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="opt_user_id" jdbcType="VARCHAR" property="optUserId"/>
+        <result column="is_delete" jdbcType="DECIMAL" property="isDelete"/>
+        <result column="update_datatime" jdbcType="TIMESTAMP" property="updateDatatime"/>
+        <result column="update_user_id" jdbcType="VARCHAR" property="updateUserId"/>
+    </resultMap>
+    <select id="getSysRoleById" resultMap="BaseResultMap">
+        SELECT
+            *
+        FROM
+             sys_role
+        WHERE            
+            id = #{id,jdbcType=VARCHAR}
+    </select>
+    
+    <select id="findAllSysRole" resultMap="BaseResultMap">
+          SELECT * FROM sys_role where is_delete = '1' ORDER BY update_time DESC
+    </select>
+    
+    <delete id="deleteSysRole">
+        DELETE
+        FROM
+             sys_role
+        WHERE            
+            id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="saveSysRole" parameterType="com.unionx.sys.role.vo.Role" >
+        INSERT INTO sys_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="name != null" >
+                name,
+            </if>
+            <if test="code != null" >
+                code,
+            </if>
+            <if test="remark != null" >
+                remark,
+            </if>
+            <if test="updateTime != null" >
+                update_time,
+            </if>
+            <if test="optUserId != null" >
+                opt_user_id,
+            </if>
+            <if test="isDelete != null" >
+                is_delete,
+            </if>
+            <if test="updateDatatime != null" >
+                update_datatime,
+            </if>
+            <if test="updateUserId != null" >
+                update_user_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if> 
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if> 
+            <if test="code != null" >
+                #{code,jdbcType=VARCHAR},
+            </if> 
+            <if test="remark != null" >
+                #{remark,jdbcType=VARCHAR},
+            </if> 
+            <if test="updateTime != null" >
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if> 
+            <if test="optUserId != null" >
+                #{optUserId,jdbcType=VARCHAR},
+            </if> 
+            <if test="isDelete != null" >
+                #{isDelete,jdbcType=DECIMAL},
+            </if> 
+            <if test="updateDatatime != null" >
+                #{updateDatatime,jdbcType=TIMESTAMP},
+            </if> 
+            <if test="updateUserId != null" >
+                #{updateUserId,jdbcType=VARCHAR},
+            </if> 
+        </trim>
+    </insert>
+
+    <update id="updateSysRole" parameterType="com.unionx.sys.role.vo.Role" >
+        UPDATE sys_role
+        <set>
+            <if test="id != null" >
+                id = #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null" >
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null" >
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="optUserId != null" >
+                opt_user_id = #{optUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null" >
+                is_delete = #{isDelete,jdbcType=DECIMAL},
+            </if>
+            <if test="updateDatatime != null" >
+                update_datatime = #{updateDatatime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUserId != null" >
+                update_user_id = #{updateUserId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE 
+            id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <!--根据 条件获得role对象-->
+    <select id="findSysRole" parameterType="com.unionx.sys.role.vo.Role" resultMap="BaseResultMap">
+        SELECT * FROM sys_role as sr
+        <where>
+            <if test="name != null and name != '' ">
+                AND sr.name = #{name}
+            </if>
+            <if test="code != null and code != '' ">
+                AND sr.code = #{code}
+            </if>
+        </where>
+
+    </select>
+
+    <!--根据id获得role-->
+    <select id="getRoleById" parameterType="String" resultMap="BaseResultMap">
+      SELECT * FROM sys_role as sr WHERE id=#{id}
+    </select>
+
+    <!--根据条件获得role-->
+    <select id="findRoleByName" parameterType="com.unionx.sys.role.vo.Role" resultMap="BaseResultMap">
+
+        SELECT * FROM sys_role as sr
+        <where>
+            <if test="name != null and name != '' ">
+                <bind name="roleName" value="'%' + name + '%'" />
+                AND sr.name LIKE #{roleName}
+            </if>
+        </where>
+        ORDER BY sr.update_time DESC
+
+    </select>
+
+    <select id="findRoleName" resultType="java.lang.String" parameterType="Object">
+        select `name` from sys_role
+        <if test="roleIdList !=null ">
+        WHERE id in
+        <foreach collection="roleIdList" item="id" index="index" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        </if>
+    </select>
+</mapper>

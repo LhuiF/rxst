@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Notification Types</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="demonstration of some noty capabilities">
+
+    <style type="text/css">
+
+        html {
+            height: 100%;
+            width: 100%;
+        }
+
+        body {
+            font-family: 'PT Sans', Tahoma, Arial, serif;
+            line-height: 13px
+        }
+
+    </style>
+</head>
+<body>
+<script src="../easyui/jquery.min.js"></script>
+
+<!-- noty -->
+<script type="text/javascript" src="jquery.noty.packaged.js"></script>
+
+<button onclick="javascript:noty({type:'alert',text:'alert',timeout:3000});">alert</button>
+<button onclick="javascript:noty({type:'information',text:'信息',timeout:3000});">information</button>
+<button onclick="javascript:noty({type:'error',text:'错误',timeout:3000});">error</button>
+<button onclick="javascript:noty({type:'warning',text:'警告',timeout:3000});">warning</button>
+<button onclick="javascript:noty({type:'notification',text:'通知',timeout:3000});">notification</button>
+</body>
+</html>

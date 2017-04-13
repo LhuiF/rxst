@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.unionx.base.material.dao.SysCailiaoMapper">
+  <resultMap id="BaseResultMap" type="com.unionx.base.material.vo1.SysCailiao">
+    <id column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="clNum" jdbcType="INTEGER" property="clnum" />
+    <result column="clName" jdbcType="VARCHAR" property="clname" />
+    <result column="clRqst" jdbcType="VARCHAR" property="clrqst" />
+    <result column="tj_uuid" jdbcType="VARCHAR" property="tjUuid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    uuid, clNum, clName, clRqst, tj_uuid
+  </sql>
+  <select id="selectByExample" parameterType="com.unionx.base.material.vo1.SysCailiaoCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_cailiao
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_cailiao
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_cailiao
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.unionx.base.material.vo1.SysCailiaoCriteria">
+    delete from sys_cailiao
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.unionx.base.material.vo1.SysCailiao">
+    insert into sys_cailiao (uuid, clNum, clName, 
+      clRqst, tj_uuid)
+    values (#{uuid,jdbcType=VARCHAR}, #{clnum,jdbcType=INTEGER}, #{clname,jdbcType=VARCHAR}, 
+      #{clrqst,jdbcType=VARCHAR}, #{tjUuid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.unionx.base.material.vo1.SysCailiao">
+    insert into sys_cailiao
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="clnum != null">
+        clNum,
+      </if>
+      <if test="clname != null">
+        clName,
+      </if>
+      <if test="clrqst != null">
+        clRqst,
+      </if>
+      <if test="tjUuid != null">
+        tj_uuid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="clnum != null">
+        #{clnum,jdbcType=INTEGER},
+      </if>
+      <if test="clname != null">
+        #{clname,jdbcType=VARCHAR},
+      </if>
+      <if test="clrqst != null">
+        #{clrqst,jdbcType=VARCHAR},
+      </if>
+      <if test="tjUuid != null">
+        #{tjUuid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.unionx.base.material.vo1.SysCailiaoCriteria" resultType="java.lang.Long">
+    select count(*) from sys_cailiao
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_cailiao
+    <set>
+      <if test="record.uuid != null">
+        uuid = #{record.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clnum != null">
+        clNum = #{record.clnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.clname != null">
+        clName = #{record.clname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clrqst != null">
+        clRqst = #{record.clrqst,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tjUuid != null">
+        tj_uuid = #{record.tjUuid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_cailiao
+    set uuid = #{record.uuid,jdbcType=VARCHAR},
+      clNum = #{record.clnum,jdbcType=INTEGER},
+      clName = #{record.clname,jdbcType=VARCHAR},
+      clRqst = #{record.clrqst,jdbcType=VARCHAR},
+      tj_uuid = #{record.tjUuid,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.unionx.base.material.vo1.SysCailiao">
+    update sys_cailiao
+    <set>
+      <if test="clnum != null">
+        clNum = #{clnum,jdbcType=INTEGER},
+      </if>
+      <if test="clname != null">
+        clName = #{clname,jdbcType=VARCHAR},
+      </if>
+      <if test="clrqst != null">
+        clRqst = #{clrqst,jdbcType=VARCHAR},
+      </if>
+      <if test="tjUuid != null">
+        tj_uuid = #{tjUuid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.unionx.base.material.vo1.SysCailiao">
+    update sys_cailiao
+    set clNum = #{clnum,jdbcType=INTEGER},
+      clName = #{clname,jdbcType=VARCHAR},
+      clRqst = #{clrqst,jdbcType=VARCHAR},
+      tj_uuid = #{tjUuid,jdbcType=VARCHAR}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  
+  <delete id="deleteByTjId">
+  	delete from sys_cailiao where tj_uuid = #{tjUuid,jdbcType=VARCHAR}
+  </delete>
+  
+  <select id="getByTjId" parameterType="String" resultMap="BaseResultMap">
+  	select *
+  	from sys_cailiao 
+  	where tj_uuid = #{tjId,jdbcType=VARCHAR}
+  </select>
+  
+</mapper>

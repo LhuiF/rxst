@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.unionx.web.accumulation.dao.RsAccumulationFundMapper">
+  <resultMap id="BaseResultMap" type="com.unionx.web.accumulation.vo.RsAccumulationFund">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="dict_code" jdbcType="VARCHAR" property="dictCode" />
+    <result column="dict_name" jdbcType="VARCHAR" property="dictName" />
+    <result column="fund_year" jdbcType="VARCHAR" property="fundYear" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="clear_month" jdbcType="VARCHAR" property="clearMonth" />
+    <result column="average_pay" jdbcType="DECIMAL" property="averagePay" />
+    <result column="ceiling" jdbcType="VARCHAR" property="ceiling" />
+    <result column="ceiling_base" jdbcType="VARCHAR" property="ceilingBase" />
+    <result column="floor_base" jdbcType="VARCHAR" property="floorBase" />
+    <result column="year_city" jdbcType="VARCHAR" property="yearCity" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="isdel" jdbcType="BIT" property="isdel" />
+    <result column="create_name" jdbcType="VARCHAR" property="createName" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_name" jdbcType="VARCHAR" property="updateName" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, uuid, dict_code, dict_name, fund_year, start_time, end_time, clear_month, average_pay, 
+    ceiling, ceiling_base, floor_base, year_city, comment, isdel, create_name, create_date, 
+    update_name, update_date
+  </sql>
+  <select id="selectByExample" parameterType="com.unionx.web.accumulation.vo.RsAccumulationFundCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from rs_accumulation_fund
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rs_accumulation_fund
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from rs_accumulation_fund
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.unionx.web.accumulation.vo.RsAccumulationFundCriteria">
+    delete from rs_accumulation_fund
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.unionx.web.accumulation.vo.RsAccumulationFund">
+    insert into rs_accumulation_fund (id, uuid, dict_code, 
+      dict_name, fund_year, start_time, 
+      end_time, clear_month, average_pay, 
+      ceiling, ceiling_base, floor_base, 
+      year_city, comment, isdel, 
+      create_name, create_date, update_name, 
+      update_date)
+    values (#{id,jdbcType=INTEGER}, #{uuid,jdbcType=VARCHAR}, #{dictCode,jdbcType=VARCHAR}, 
+      #{dictName,jdbcType=VARCHAR}, #{fundYear,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{clearMonth,jdbcType=VARCHAR}, #{averagePay,jdbcType=DECIMAL}, 
+      #{ceiling,jdbcType=VARCHAR}, #{ceilingBase,jdbcType=VARCHAR}, #{floorBase,jdbcType=VARCHAR}, 
+      #{yearCity,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, #{isdel,jdbcType=BIT}, 
+      #{createName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateName,jdbcType=VARCHAR}, 
+      #{updateDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.unionx.web.accumulation.vo.RsAccumulationFund">
+    insert into rs_accumulation_fund
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="dictCode != null">
+        dict_code,
+      </if>
+      <if test="dictName != null">
+        dict_name,
+      </if>
+      <if test="fundYear != null">
+        fund_year,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="clearMonth != null">
+        clear_month,
+      </if>
+      <if test="averagePay != null">
+        average_pay,
+      </if>
+      <if test="ceiling != null">
+        ceiling,
+      </if>
+      <if test="ceilingBase != null">
+        ceiling_base,
+      </if>
+      <if test="floorBase != null">
+        floor_base,
+      </if>
+      <if test="yearCity != null">
+        year_city,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
+      <if test="isdel != null">
+        isdel,
+      </if>
+      <if test="createName != null">
+        create_name,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateName != null">
+        update_name,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uuid != null">
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="dictCode != null">
+        #{dictCode,jdbcType=VARCHAR},
+      </if>
+      <if test="dictName != null">
+        #{dictName,jdbcType=VARCHAR},
+      </if>
+      <if test="fundYear != null">
+        #{fundYear,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="clearMonth != null">
+        #{clearMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="averagePay != null">
+        #{averagePay,jdbcType=DECIMAL},
+      </if>
+      <if test="ceiling != null">
+        #{ceiling,jdbcType=VARCHAR},
+      </if>
+      <if test="ceilingBase != null">
+        #{ceilingBase,jdbcType=VARCHAR},
+      </if>
+      <if test="floorBase != null">
+        #{floorBase,jdbcType=VARCHAR},
+      </if>
+      <if test="yearCity != null">
+        #{yearCity,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null">
+        #{isdel,jdbcType=BIT},
+      </if>
+      <if test="createName != null">
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.unionx.web.accumulation.vo.RsAccumulationFundCriteria" resultType="java.lang.Long">
+    select count(*) from rs_accumulation_fund
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update rs_accumulation_fund
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.uuid != null">
+        uuid = #{record.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dictCode != null">
+        dict_code = #{record.dictCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dictName != null">
+        dict_name = #{record.dictName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fundYear != null">
+        fund_year = #{record.fundYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startTime != null">
+        start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null">
+        end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.clearMonth != null">
+        clear_month = #{record.clearMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.averagePay != null">
+        average_pay = #{record.averagePay,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ceiling != null">
+        ceiling = #{record.ceiling,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ceilingBase != null">
+        ceiling_base = #{record.ceilingBase,jdbcType=VARCHAR},
+      </if>
+      <if test="record.floorBase != null">
+        floor_base = #{record.floorBase,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yearCity != null">
+        year_city = #{record.yearCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comment != null">
+        comment = #{record.comment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isdel != null">
+        isdel = #{record.isdel,jdbcType=BIT},
+      </if>
+      <if test="record.createName != null">
+        create_name = #{record.createName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateName != null">
+        update_name = #{record.updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateDate != null">
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update rs_accumulation_fund
+    set id = #{record.id,jdbcType=INTEGER},
+      uuid = #{record.uuid,jdbcType=VARCHAR},
+      dict_code = #{record.dictCode,jdbcType=VARCHAR},
+      dict_name = #{record.dictName,jdbcType=VARCHAR},
+      fund_year = #{record.fundYear,jdbcType=VARCHAR},
+      start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      clear_month = #{record.clearMonth,jdbcType=VARCHAR},
+      average_pay = #{record.averagePay,jdbcType=DECIMAL},
+      ceiling = #{record.ceiling,jdbcType=VARCHAR},
+      ceiling_base = #{record.ceilingBase,jdbcType=VARCHAR},
+      floor_base = #{record.floorBase,jdbcType=VARCHAR},
+      year_city = #{record.yearCity,jdbcType=VARCHAR},
+      comment = #{record.comment,jdbcType=VARCHAR},
+      isdel = #{record.isdel,jdbcType=BIT},
+      create_name = #{record.createName,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      update_name = #{record.updateName,jdbcType=VARCHAR},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.unionx.web.accumulation.vo.RsAccumulationFund">
+    update rs_accumulation_fund
+    <set>
+      <if test="uuid != null">
+        uuid = #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="dictCode != null">
+        dict_code = #{dictCode,jdbcType=VARCHAR},
+      </if>
+      <if test="dictName != null">
+        dict_name = #{dictName,jdbcType=VARCHAR},
+      </if>
+      <if test="fundYear != null">
+        fund_year = #{fundYear,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="clearMonth != null">
+        clear_month = #{clearMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="averagePay != null">
+        average_pay = #{averagePay,jdbcType=DECIMAL},
+      </if>
+      <if test="ceiling != null">
+        ceiling = #{ceiling,jdbcType=VARCHAR},
+      </if>
+      <if test="ceilingBase != null">
+        ceiling_base = #{ceilingBase,jdbcType=VARCHAR},
+      </if>
+      <if test="floorBase != null">
+        floor_base = #{floorBase,jdbcType=VARCHAR},
+      </if>
+      <if test="yearCity != null">
+        year_city = #{yearCity,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null">
+        isdel = #{isdel,jdbcType=BIT},
+      </if>
+      <if test="createName != null">
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        update_name = #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.unionx.web.accumulation.vo.RsAccumulationFund">
+    update rs_accumulation_fund
+    set uuid = #{uuid,jdbcType=VARCHAR},
+      dict_code = #{dictCode,jdbcType=VARCHAR},
+      dict_name = #{dictName,jdbcType=VARCHAR},
+      fund_year = #{fundYear,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      clear_month = #{clearMonth,jdbcType=VARCHAR},
+      average_pay = #{averagePay,jdbcType=DECIMAL},
+      ceiling = #{ceiling,jdbcType=VARCHAR},
+      ceiling_base = #{ceilingBase,jdbcType=VARCHAR},
+      floor_base = #{floorBase,jdbcType=VARCHAR},
+      year_city = #{yearCity,jdbcType=VARCHAR},
+      comment = #{comment,jdbcType=VARCHAR},
+      isdel = #{isdel,jdbcType=BIT},
+      create_name = #{createName,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_name = #{updateName,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getdictBycode" parameterType="java.lang.String" resultType="com.unionx.sys.dict.vo.DictItem">
+  	SELECT * FROM sys_dict_item WHERE data_dict_code = #{code}
+  </select>
+  
+  <select id="getProportion" resultMap="BaseResultMap">
+  	SELECT uuid,year_city ,start_time,end_time FROM rs_accumulation_fund WHERE isdel = 0
+  </select>
+  
+  <select id="getgAccumulationById" parameterType="java.lang.String" resultType="com.unionx.web.accumulation.po.RsAccumulationFundVo">
+		  SELECT
+		    a.id,
+			a.uuid,
+			a.dict_code AS dictCode,
+			a.dict_name AS dictName,
+			a.fund_year AS fundYear,
+			a.start_time AS startTime,
+			a.end_time AS endTime,
+			a.clear_month AS clearMonth,
+			a.average_pay AS averagePay,
+			a.ceiling,
+			a.ceiling_base AS ceilingBase,
+			a.floor_base AS floorBase,
+			a.`comment`,
+			f.id AS fundId,
+			f.dict_name AS fundCodeName,
+			f.dict_code AS fundCode,
+			f.start_time AS fundStartTime,
+			f.end_time AS fundEndTime
+		FROM
+			rs_accumulation_fund a
+		LEFT JOIN rs_accumulation_fund_account f ON a.uuid = f.accumulation_fund_uuid
+		WHERE
+			a.isdel = 0
+		AND a.uuid = #{id}
+  </select>
+  
+  <select id="getAccumByProp" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+		SELECT
+			uuid,
+			start_time AS startTime,
+			end_time AS endTime,
+			COUNT(
+				DISTINCT f.accumulation_fund_uuid
+			),
+			concat_ws(
+				'',
+				fund_year,
+				'(',
+				dict_name,
+				')'
+			) AS fund_year
+		FROM
+			rs_accumulation_fund a
+		JOIN rs_accumulation_fund_proportion f ON a.uuid = f.accumulation_fund_uuid
+		WHERE
+			f.isdel = 0
+		GROUP BY f.accumulation_fund_uuid
+    <if test="yearCity != null">
+       and yearCity = #{yearCity}
+    </if>
+  </select>
+</mapper>

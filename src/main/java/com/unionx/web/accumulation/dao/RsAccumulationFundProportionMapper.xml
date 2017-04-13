@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.unionx.web.accumulation.dao.RsAccumulationFundProportionMapper">
+  <resultMap id="BaseResultMap" type="com.unionx.web.accumulation.vo.RsAccumulationFundProportion">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="accumulation_fund_uuid" jdbcType="VARCHAR" property="accumulationFundUuid" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="enterprise" jdbcType="VARCHAR" property="enterprise" />
+    <result column="personal_not_floor" jdbcType="VARCHAR" property="personalNotFloor" />
+    <result column="personal_floor" jdbcType="VARCHAR" property="personalFloor" />
+    <result column="isdel" jdbcType="BIT" property="isdel" />
+    <result column="create_name" jdbcType="VARCHAR" property="createName" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_name" jdbcType="VARCHAR" property="updateName" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, accumulation_fund_uuid, code, name, enterprise, personal_not_floor, personal_floor, 
+    isdel, create_name, create_date, update_name, update_date
+  </sql>
+  <select id="selectByExample" parameterType="com.unionx.web.accumulation.vo.RsAccumulationFundProportionCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from rs_accumulation_fund_proportion
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rs_accumulation_fund_proportion
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from rs_accumulation_fund_proportion
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.unionx.web.accumulation.vo.RsAccumulationFundProportionCriteria">
+    delete from rs_accumulation_fund_proportion
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.unionx.web.accumulation.vo.RsAccumulationFundProportion">
+    insert into rs_accumulation_fund_proportion (id, accumulation_fund_uuid, code, 
+      name, enterprise, personal_not_floor, 
+      personal_floor, isdel, create_name, 
+      create_date, update_name, update_date
+      )
+    values (#{id,jdbcType=INTEGER}, #{accumulationFundUuid,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{enterprise,jdbcType=VARCHAR}, #{personalNotFloor,jdbcType=VARCHAR}, 
+      #{personalFloor,jdbcType=VARCHAR}, #{isdel,jdbcType=BIT}, #{createName,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{updateName,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.unionx.web.accumulation.vo.RsAccumulationFundProportion">
+    insert into rs_accumulation_fund_proportion
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="accumulationFundUuid != null">
+        accumulation_fund_uuid,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="enterprise != null">
+        enterprise,
+      </if>
+      <if test="personalNotFloor != null">
+        personal_not_floor,
+      </if>
+      <if test="personalFloor != null">
+        personal_floor,
+      </if>
+      <if test="isdel != null">
+        isdel,
+      </if>
+      <if test="createName != null">
+        create_name,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateName != null">
+        update_name,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="accumulationFundUuid != null">
+        #{accumulationFundUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="enterprise != null">
+        #{enterprise,jdbcType=VARCHAR},
+      </if>
+      <if test="personalNotFloor != null">
+        #{personalNotFloor,jdbcType=VARCHAR},
+      </if>
+      <if test="personalFloor != null">
+        #{personalFloor,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null">
+        #{isdel,jdbcType=BIT},
+      </if>
+      <if test="createName != null">
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.unionx.web.accumulation.vo.RsAccumulationFundProportionCriteria" resultType="java.lang.Long">
+    select count(*) from rs_accumulation_fund_proportion
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update rs_accumulation_fund_proportion
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.accumulationFundUuid != null">
+        accumulation_fund_uuid = #{record.accumulationFundUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.code != null">
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enterprise != null">
+        enterprise = #{record.enterprise,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personalNotFloor != null">
+        personal_not_floor = #{record.personalNotFloor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personalFloor != null">
+        personal_floor = #{record.personalFloor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isdel != null">
+        isdel = #{record.isdel,jdbcType=BIT},
+      </if>
+      <if test="record.createName != null">
+        create_name = #{record.createName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateName != null">
+        update_name = #{record.updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateDate != null">
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update rs_accumulation_fund_proportion
+    set id = #{record.id,jdbcType=INTEGER},
+      accumulation_fund_uuid = #{record.accumulationFundUuid,jdbcType=VARCHAR},
+      code = #{record.code,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      enterprise = #{record.enterprise,jdbcType=VARCHAR},
+      personal_not_floor = #{record.personalNotFloor,jdbcType=VARCHAR},
+      personal_floor = #{record.personalFloor,jdbcType=VARCHAR},
+      isdel = #{record.isdel,jdbcType=BIT},
+      create_name = #{record.createName,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      update_name = #{record.updateName,jdbcType=VARCHAR},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.unionx.web.accumulation.vo.RsAccumulationFundProportion">
+    update rs_accumulation_fund_proportion
+    <set>
+      <if test="accumulationFundUuid != null">
+        accumulation_fund_uuid = #{accumulationFundUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="enterprise != null">
+        enterprise = #{enterprise,jdbcType=VARCHAR},
+      </if>
+      <if test="personalNotFloor != null">
+        personal_not_floor = #{personalNotFloor,jdbcType=VARCHAR},
+      </if>
+      <if test="personalFloor != null">
+        personal_floor = #{personalFloor,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null">
+        isdel = #{isdel,jdbcType=BIT},
+      </if>
+      <if test="createName != null">
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        update_name = #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.unionx.web.accumulation.vo.RsAccumulationFundProportion">
+    update rs_accumulation_fund_proportion
+    set accumulation_fund_uuid = #{accumulationFundUuid,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      enterprise = #{enterprise,jdbcType=VARCHAR},
+      personal_not_floor = #{personalNotFloor,jdbcType=VARCHAR},
+      personal_floor = #{personalFloor,jdbcType=VARCHAR},
+      isdel = #{isdel,jdbcType=BIT},
+      create_name = #{createName,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_name = #{updateName,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getProportionById" parameterType="String" resultType="com.unionx.web.accumulation.po.RsAccumulationFundProportionVo">
+	SELECT
+		f.id,
+		f.accumulation_fund_uuid AS accumulationFundUuid,
+		concat_ws('',a.fund_year,'(',a.dict_name,')') AS fundYear,
+		a.start_time AS startTime,
+		a.end_time AS endTime,
+		f.`code`,
+		f.`name`,
+		f.enterprise,
+		f.personal_floor AS personalFloor,
+		f.personal_not_floor AS personalNotFloor
+	FROM
+		rs_accumulation_fund a
+	LEFT JOIN rs_accumulation_fund_proportion f ON a.uuid = f.accumulation_fund_uuid
+	WHERE
+		a.uuid = #{id}
+    AND f.isdel=0
+  </select>
+  
+  <update id="deleteById" parameterType="String">
+   update rs_accumulation_fund_proportion
+    set isdel = 1
+    where accumulation_fund_uuid = #{id}
+  </update>
+</mapper>

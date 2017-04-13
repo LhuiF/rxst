@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.unionx.sys.dict.dao.DictItemMapper">
+    <resultMap id="BaseResultMap" type="com.unionx.sys.dict.vo.DictItem">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="data_dict_code" jdbcType="VARCHAR" property="dataDictCode"/>
+        <result column="order_no" jdbcType="INTEGER" property="orderNo"/>
+        <result column="update_user_id" jdbcType="VARCHAR" property="updateUserId"/>
+        <result column="update_datatime" jdbcType="TIMESTAMP" property="updateDatatime"/>
+    </resultMap>
+
+    <!--根据data_dict_code 查询字典项列表-->
+    <select id="findDictItem" resultMap="BaseResultMap">
+        SELECT *
+        FROM sys_dict_item
+        <where>
+            <if test="dictCode!=null and dictCode!=''">
+              AND data_dict_code = #{dictCode,jdbcType=VARCHAR}
+            </if>
+            <if test="itemName!=null and itemName!=''">
+              AND name like CONCAT('%',#{itemName,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+        ORDER BY order_no
+    </select>
+
+    <select id="getDictItemById" resultMap="BaseResultMap">
+        SELECT
+            *
+        FROM
+             sys_dict_item
+        WHERE
+            id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findAllDictItem" resultMap="BaseResultMap">
+          SELECT * FROM sys_dict_item
+    </select>
+
+    <delete id="deleteDictItem">
+        DELETE
+        FROM
+             sys_dict_item
+        WHERE
+            id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="saveDictItem" parameterType="com.unionx.sys.dict.vo.DictItem" >
+        INSERT INTO sys_dict_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="code != null" >
+                code,
+            </if>
+            <if test="name != null" >
+                name,
+            </if>
+            <if test="remark != null" >
+                remark,
+            </if>
+            <if test="dataDictCode != null" >
+                data_dict_code,
+            </if>
+            <if test="orderNo != null" >
+                order_no,
+            </if>
+            <if test="updateUserId != null" >
+                update_user_id,
+            </if>
+            <if test="updateDatatime != null" >
+                update_datatime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null" >
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="dataDictCode != null" >
+                #{dataDictCode,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNo != null" >
+                #{orderNo,jdbcType=INTEGER},
+            </if>
+            <if test="updateUserId != null" >
+                #{updateUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDatatime != null" >
+                #{updateDatatime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateDictItem" parameterType="com.unionx.sys.dict.vo.DictItem" >
+        UPDATE sys_dict_item
+        <set>
+            <if test="id != null" >
+                id = #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null" >
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="dataDictCode != null" >
+                data_dict_code = #{dataDictCode,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNo != null" >
+                order_no = #{orderNo,jdbcType=INTEGER},
+            </if>
+            <if test="updateUserId != null" >
+                update_user_id = #{updateUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDatatime != null" >
+                update_datatime = #{updateDatatime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        WHERE
+            id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <!-- 查询数据字典列表 -->
+    <select id="getDictItemList" resultMap="BaseResultMap"  parameterType="Object">
+        select
+        id,code,name,remark,data_dict_code,order_no,update_user_id,update_datatime
+        from sys_dict_item
+        <where>
+            <trim  suffixOverrides="," >
+                <if test="id != null and id != ''" >
+                  and id =  #{id}
+                </if>
+                <if test="code != null and code != ''" >
+                  and code =  #{code}
+                </if>
+                <if test="name != null and name != ''" >
+                  and name =  #{name}
+                </if>
+                <if test="remark != null and remark != ''" >
+                  and remark =  #{remark}
+                </if>
+                <if test="dataDictCode != null and dataDictCode != ''" >
+                  and data_dict_code =  #{dataDictCode}
+                </if>
+                <if test="orderNo != null and orderNo != ''" >
+                  and order_no =  #{orderNo}
+                </if>
+                <if test="updateUserId != null and updateUserId != ''" >
+                  and update_user_id =  #{updateUserId}
+                </if>
+                <if test="updateDatatime != null" >
+                  and update_datatime =  #{updateDatatime}
+                </if>
+            </trim>
+        </where>
+    </select>
+    <!--查询根据字典id查询信息-->
+    <select id="findByDictItem" resultMap="BaseResultMap">
+        SELECT * FROM sys_dict_item
+        where data_dict_code= #{dataDictCode,jdbcType=VARCHAR}
+        order by code asc
+    </select>
+
+    <!--查询根据字典id查询信息-->
+    <select id="findByDictItemName" resultMap="BaseResultMap">
+        SELECT * FROM sys_dict_item
+        where data_dict_code= #{dataDictCode,jdbcType=VARCHAR}
+         AND  `code` = #{code,jdbcType=VARCHAR}
+    </select>
+<!--获取店家岗位和一龄岗位-->
+    <select id="getPost" resultMap="BaseResultMap">
+        SELECT * FROM sys_dict_item where data_dict_code ='1010' or data_dict_code="1003"
+    </select>
+<!--获取字典表跟踪频率-->
+    <select id="getByFrequency" resultMap="BaseResultMap">
+          SELECT * FROM sys_dict_item where data_dict_code ='1021'
+    </select>
+    <!--检验名称-->
+    <select id="validName" resultMap="BaseResultMap">
+        SELECT * FROM sys_dict_item
+        <where>
+            <if test="id != null and id != ''">
+              AND id = #{id,jdbcType=VARCHAR}
+            </if>
+            <if test="dictCode!=null and dictCode!=''">
+              AND data_dict_code = #{dictCode,jdbcType=VARCHAR}
+            </if>
+            <if test="itemName!=null and itemName!=''">
+              AND name = #{itemName,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+    
+     <select id="findAllBygroup" resultType="map">
+		SELECT
+			item.`code`,item.`name`,item.data_dict_code
+		FROM
+			sys_dict_item item
+    </select>
+</mapper>

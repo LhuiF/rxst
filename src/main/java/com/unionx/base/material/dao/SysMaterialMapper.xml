@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.unionx.base.material.dao.SysMaterialMapper">
+  <resultMap id="BaseResultMap" type="com.unionx.base.material.vo.SysMaterial">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="qu" jdbcType="VARCHAR" property="qu" />
+    <result column="type_id" jdbcType="VARCHAR" property="typeId" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="is_material" jdbcType="INTEGER" property="isMaterial" />
+    <result column="is_apply" jdbcType="INTEGER" property="isApply" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_user_id" jdbcType="VARCHAR" property="createUserId" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="condition_01" jdbcType="VARCHAR" property="condition01" />
+    <result column="conditon_01" jdbcType="VARCHAR" property="conditon01" />
+    <result column="marerial_request" jdbcType="VARCHAR" property="marerialRequest" />
+    <result column="fenshu" jdbcType="VARCHAR" property="fenshu" />
+    <result column="str03" jdbcType="VARCHAR" property="str03" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, uuid, qu, type_id, product_name, is_material, is_apply, create_time, create_user_id, 
+    remark, condition_01, conditon_01, marerial_request, fenshu, str03
+  </sql>
+  <select id="selectByExample" parameterType="com.unionx.base.material.vo.SysMaterialCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_material
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_material
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_material
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.unionx.base.material.vo.SysMaterialCriteria">
+    delete from sys_material
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.unionx.base.material.vo.SysMaterial">
+    insert into sys_material (id, uuid, qu, 
+      type_id, product_name, is_material, 
+      is_apply, create_time, create_user_id, 
+      remark, condition_01, conditon_01, 
+      marerial_request, fenshu, str03
+      )
+    values (#{id,jdbcType=VARCHAR}, #{uuid,jdbcType=VARCHAR}, #{qu,jdbcType=VARCHAR}, 
+      #{typeId,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, #{isMaterial,jdbcType=INTEGER}, 
+      #{isApply,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{condition01,jdbcType=VARCHAR}, #{conditon01,jdbcType=VARCHAR}, 
+      #{marerialRequest,jdbcType=VARCHAR}, #{fenshu,jdbcType=VARCHAR}, #{str03,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.unionx.base.material.vo.SysMaterial">
+    insert into sys_material
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="qu != null">
+        qu,
+      </if>
+      <if test="typeId != null">
+        type_id,
+      </if>
+      <if test="productName != null">
+        product_name,
+      </if>
+      <if test="isMaterial != null">
+        is_material,
+      </if>
+      <if test="isApply != null">
+        is_apply,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createUserId != null">
+        create_user_id,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="condition01 != null">
+        condition_01,
+      </if>
+      <if test="conditon01 != null">
+        conditon_01,
+      </if>
+      <if test="marerialRequest != null">
+        marerial_request,
+      </if>
+      <if test="fenshu != null">
+        fenshu,
+      </if>
+      <if test="str03 != null">
+        str03,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="uuid != null">
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="qu != null">
+        #{qu,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null">
+        #{typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="isMaterial != null">
+        #{isMaterial,jdbcType=INTEGER},
+      </if>
+      <if test="isApply != null">
+        #{isApply,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="condition01 != null">
+        #{condition01,jdbcType=VARCHAR},
+      </if>
+      <if test="conditon01 != null">
+        #{conditon01,jdbcType=VARCHAR},
+      </if>
+      <if test="marerialRequest != null">
+        #{marerialRequest,jdbcType=VARCHAR},
+      </if>
+      <if test="fenshu != null">
+        #{fenshu,jdbcType=VARCHAR},
+      </if>
+      <if test="str03 != null">
+        #{str03,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.unionx.base.material.vo.SysMaterialCriteria" resultType="java.lang.Long">
+    select count(*) from sys_material
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_material
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uuid != null">
+        uuid = #{record.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qu != null">
+        qu = #{record.qu,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeId != null">
+        type_id = #{record.typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productName != null">
+        product_name = #{record.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isMaterial != null">
+        is_material = #{record.isMaterial,jdbcType=INTEGER},
+      </if>
+      <if test="record.isApply != null">
+        is_apply = #{record.isApply,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createUserId != null">
+        create_user_id = #{record.createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.condition01 != null">
+        condition_01 = #{record.condition01,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conditon01 != null">
+        conditon_01 = #{record.conditon01,jdbcType=VARCHAR},
+      </if>
+      <if test="record.marerialRequest != null">
+        marerial_request = #{record.marerialRequest,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fenshu != null">
+        fenshu = #{record.fenshu,jdbcType=VARCHAR},
+      </if>
+      <if test="record.str03 != null">
+        str03 = #{record.str03,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_material
+    set id = #{record.id,jdbcType=VARCHAR},
+      uuid = #{record.uuid,jdbcType=VARCHAR},
+      qu = #{record.qu,jdbcType=VARCHAR},
+      type_id = #{record.typeId,jdbcType=VARCHAR},
+      product_name = #{record.productName,jdbcType=VARCHAR},
+      is_material = #{record.isMaterial,jdbcType=INTEGER},
+      is_apply = #{record.isApply,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      create_user_id = #{record.createUserId,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      condition_01 = #{record.condition01,jdbcType=VARCHAR},
+      conditon_01 = #{record.conditon01,jdbcType=VARCHAR},
+      marerial_request = #{record.marerialRequest,jdbcType=VARCHAR},
+      fenshu = #{record.fenshu,jdbcType=VARCHAR},
+      str03 = #{record.str03,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.unionx.base.material.vo.SysMaterial">
+    update sys_material
+    <set>
+      <if test="uuid != null">
+        uuid = #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="qu != null">
+        qu = #{qu,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null">
+        type_id = #{typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="isMaterial != null">
+        is_material = #{isMaterial,jdbcType=INTEGER},
+      </if>
+      <if test="isApply != null">
+        is_apply = #{isApply,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null">
+        create_user_id = #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="condition01 != null">
+        condition_01 = #{condition01,jdbcType=VARCHAR},
+      </if>
+      <if test="conditon01 != null">
+        conditon_01 = #{conditon01,jdbcType=VARCHAR},
+      </if>
+      <if test="marerialRequest != null">
+        marerial_request = #{marerialRequest,jdbcType=VARCHAR},
+      </if>
+      <if test="fenshu != null">
+        fenshu = #{fenshu,jdbcType=VARCHAR},
+      </if>
+      <if test="str03 != null">
+        str03 = #{str03,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.unionx.base.material.vo.SysMaterial">
+    update sys_material
+    set uuid = #{uuid,jdbcType=VARCHAR},
+      qu = #{qu,jdbcType=VARCHAR},
+      type_id = #{typeId,jdbcType=VARCHAR},
+      product_name = #{productName,jdbcType=VARCHAR},
+      is_material = #{isMaterial,jdbcType=INTEGER},
+      is_apply = #{isApply,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_user_id = #{createUserId,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      condition_01 = #{condition01,jdbcType=VARCHAR},
+      conditon_01 = #{conditon01,jdbcType=VARCHAR},
+      marerial_request = #{marerialRequest,jdbcType=VARCHAR},
+      fenshu = #{fenshu,jdbcType=VARCHAR},
+      str03 = #{str03,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <delete id="deleteByUuid" parameterType="String">
+  	delete from sys_material where uuid = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <select id="findByUuid" parameterType="String" resultType="com.unionx.base.material.vo.SysMaterialVo">
+  	select 
+	  	a.id,
+	  	a.uuid,
+	  	a.qu,
+	  	a.type_id as typeId,
+	  	a.product_name as productName,
+	  	a.is_material as isMaterial,
+	  	a.is_apply as isApply,
+	  	a.create_time as createTime,
+	  	a.create_user_id as createUserId,
+	  	a.remark,
+	  	a.condition_01 as condition01,
+	  	a.conditon_01 as conditon01,
+	  	a.marerial_request as marerialRequests,
+	  	a.fenshu 
+  
+  	 from sys_material a
+  	 LEFT JOIN  sys_product b on a.uuid = b.id
+  	where 
+  	a.uuid = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getAll" resultMap="BaseResultMap">
+  	select * from sys_material
+  </select>
+  
+  
+  <select id="getMaterialList" resultMap="BaseResultMap" parameterType="com.unionx.base.material.vo.SysMaterial">
+  	select * from sys_material 
+  	<where> 
+	  	<if test="typeId != null and typeId !=''">
+	  		type_id = #{typeId,jdbcType=VARCHAR}
+	  	</if>
+	  	<if test=" qu != null and qu != '' ">
+	  		and qu = #{qu,jdbcType=VARCHAR}
+	  	</if>	
+	  	<if test="isMaterial != null ">
+	  	 	and is_material = #{isMaterial,jdbcType=INTEGER}      
+	  	</if>
+	  	<if test="isApply != null">
+        	and is_apply = #{isApply,jdbcType=INTEGER}
+      </if>
+	  	
+  	</where>
+  </select>
+  
+  
+  <select id="findById" resultMap="BaseResultMap">
+        SELECT
+            *
+        FROM
+             sys_material
+        WHERE            
+            id = #{id,jdbcType=INTEGER}
+    </select>
+</mapper>

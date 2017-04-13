@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.unionx.web.proxy.dao.RsLinkpeopleMapper">
+  <resultMap id="BaseResultMap" type="com.unionx.web.proxy.vo.RsLinkpeople">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="peo_name" jdbcType="VARCHAR" property="peoName" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="duty" jdbcType="VARCHAR" property="duty" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="eamil" jdbcType="VARCHAR" property="eamil" />
+    <result column="qq" jdbcType="VARCHAR" property="qq" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="create_date" jdbcType="DATE" property="createDate" />
+    <result column="update_date" jdbcType="DATE" property="updateDate" />
+    <result column="create_peo" jdbcType="VARCHAR" property="createPeo" />
+    <result column="association_id" jdbcType="VARCHAR" property="associationId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, peo_name, sex, duty, phone, eamil, qq, state, create_date, update_date, create_peo, 
+    association_id
+  </sql>
+  <select id="selectByExample" parameterType="com.unionx.web.proxy.po.RsLinkpeopleCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from rs_linkpeople
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rs_linkpeople
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from rs_linkpeople
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.unionx.web.proxy.po.RsLinkpeopleCriteria">
+    delete from rs_linkpeople
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.unionx.web.proxy.vo.RsLinkpeople">
+    insert into rs_linkpeople (id, peo_name, sex, 
+      duty, phone, eamil, 
+      qq, state, create_date, 
+      update_date, create_peo, association_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{peoName,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{duty,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{eamil,jdbcType=VARCHAR}, 
+      #{qq,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, 
+      #{updateDate,jdbcType=DATE}, #{createPeo,jdbcType=VARCHAR}, #{associationId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.unionx.web.proxy.vo.RsLinkpeople">
+    insert into rs_linkpeople
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="peoName != null">
+        peo_name,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="duty != null">
+        duty,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="eamil != null">
+        eamil,
+      </if>
+      <if test="qq != null">
+        qq,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="createPeo != null">
+        create_peo,
+      </if>
+      <if test="associationId != null">
+        association_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="peoName != null">
+        #{peoName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="duty != null">
+        #{duty,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="eamil != null">
+        #{eamil,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="createPeo != null">
+        #{createPeo,jdbcType=VARCHAR},
+      </if>
+      <if test="associationId != null">
+        #{associationId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.unionx.web.proxy.po.RsLinkpeopleCriteria" resultType="java.lang.Long">
+    select count(*) from rs_linkpeople
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update rs_linkpeople
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.peoName != null">
+        peo_name = #{record.peoName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.duty != null">
+        duty = #{record.duty,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eamil != null">
+        eamil = #{record.eamil,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qq != null">
+        qq = #{record.qq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        create_date = #{record.createDate,jdbcType=DATE},
+      </if>
+      <if test="record.updateDate != null">
+        update_date = #{record.updateDate,jdbcType=DATE},
+      </if>
+      <if test="record.createPeo != null">
+        create_peo = #{record.createPeo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.associationId != null">
+        association_id = #{record.associationId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update rs_linkpeople
+    set id = #{record.id,jdbcType=INTEGER},
+      peo_name = #{record.peoName,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      duty = #{record.duty,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      eamil = #{record.eamil,jdbcType=VARCHAR},
+      qq = #{record.qq,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=DATE},
+      update_date = #{record.updateDate,jdbcType=DATE},
+      create_peo = #{record.createPeo,jdbcType=VARCHAR},
+      association_id = #{record.associationId,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.unionx.web.proxy.vo.RsLinkpeople">
+    update rs_linkpeople
+    <set>
+      <if test="peoName != null">
+        peo_name = #{peoName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="duty != null">
+        duty = #{duty,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="eamil != null">
+        eamil = #{eamil,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="createPeo != null">
+        create_peo = #{createPeo,jdbcType=VARCHAR},
+      </if>
+      <if test="associationId != null">
+        association_id = #{associationId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.unionx.web.proxy.vo.RsLinkpeople">
+    update rs_linkpeople
+    set peo_name = #{peoName,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      duty = #{duty,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      eamil = #{eamil,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=DATE},
+      update_date = #{updateDate,jdbcType=DATE},
+      create_peo = #{createPeo,jdbcType=VARCHAR},
+      association_id = #{associationId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

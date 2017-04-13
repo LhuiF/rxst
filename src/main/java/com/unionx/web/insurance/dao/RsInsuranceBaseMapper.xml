@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.unionx.web.insurance.dao.RsInsuranceBaseMapper">
+  <resultMap id="BaseResultMap" type="com.unionx.web.insurance.vo.RsInsuranceBase">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="insurance_uuid" jdbcType="VARCHAR" property="insuranceUuid" />
+    <result column="dict_code" jdbcType="VARCHAR" property="dictCode" />
+    <result column="dict_name" jdbcType="VARCHAR" property="dictName" />
+    <result column="ceiling" jdbcType="DOUBLE" property="ceiling" />
+    <result column="floor" jdbcType="DOUBLE" property="floor" />
+    <result column="ceiling_base" jdbcType="DOUBLE" property="ceilingBase" />
+    <result column="floor_base" jdbcType="DOUBLE" property="floorBase" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, insurance_uuid, dict_code, dict_name, ceiling, floor, ceiling_base, floor_base
+  </sql>
+  <select id="selectByExample" parameterType="com.unionx.web.insurance.vo.RsInsuranceBaseCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from rs_insurance_base
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rs_insurance_base
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from rs_insurance_base
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.unionx.web.insurance.vo.RsInsuranceBaseCriteria">
+    delete from rs_insurance_base
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.unionx.web.insurance.vo.RsInsuranceBase">
+    insert into rs_insurance_base (id, insurance_uuid, dict_code, 
+      dict_name, ceiling, floor, 
+      ceiling_base, floor_base)
+    values (#{id,jdbcType=INTEGER}, #{insuranceUuid,jdbcType=VARCHAR}, #{dictCode,jdbcType=VARCHAR}, 
+      #{dictName,jdbcType=VARCHAR}, #{ceiling,jdbcType=DOUBLE}, #{floor,jdbcType=DOUBLE}, 
+      #{ceilingBase,jdbcType=DOUBLE}, #{floorBase,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.unionx.web.insurance.vo.RsInsuranceBase">
+    insert into rs_insurance_base
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="insuranceUuid != null">
+        insurance_uuid,
+      </if>
+      <if test="dictCode != null">
+        dict_code,
+      </if>
+      <if test="dictName != null">
+        dict_name,
+      </if>
+      <if test="ceiling != null">
+        ceiling,
+      </if>
+      <if test="floor != null">
+        floor,
+      </if>
+      <if test="ceilingBase != null">
+        ceiling_base,
+      </if>
+      <if test="floorBase != null">
+        floor_base,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="insuranceUuid != null">
+        #{insuranceUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="dictCode != null">
+        #{dictCode,jdbcType=VARCHAR},
+      </if>
+      <if test="dictName != null">
+        #{dictName,jdbcType=VARCHAR},
+      </if>
+      <if test="ceiling != null">
+        #{ceiling,jdbcType=DOUBLE},
+      </if>
+      <if test="floor != null">
+        #{floor,jdbcType=DOUBLE},
+      </if>
+      <if test="ceilingBase != null">
+        #{ceilingBase,jdbcType=DOUBLE},
+      </if>
+      <if test="floorBase != null">
+        #{floorBase,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.unionx.web.insurance.vo.RsInsuranceBaseCriteria" resultType="java.lang.Long">
+    select count(*) from rs_insurance_base
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update rs_insurance_base
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.insuranceUuid != null">
+        insurance_uuid = #{record.insuranceUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dictCode != null">
+        dict_code = #{record.dictCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dictName != null">
+        dict_name = #{record.dictName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ceiling != null">
+        ceiling = #{record.ceiling,jdbcType=DOUBLE},
+      </if>
+      <if test="record.floor != null">
+        floor = #{record.floor,jdbcType=DOUBLE},
+      </if>
+      <if test="record.ceilingBase != null">
+        ceiling_base = #{record.ceilingBase,jdbcType=DOUBLE},
+      </if>
+      <if test="record.floorBase != null">
+        floor_base = #{record.floorBase,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update rs_insurance_base
+    set id = #{record.id,jdbcType=INTEGER},
+      insurance_uuid = #{record.insuranceUuid,jdbcType=VARCHAR},
+      dict_code = #{record.dictCode,jdbcType=VARCHAR},
+      dict_name = #{record.dictName,jdbcType=VARCHAR},
+      ceiling = #{record.ceiling,jdbcType=DOUBLE},
+      floor = #{record.floor,jdbcType=DOUBLE},
+      ceiling_base = #{record.ceilingBase,jdbcType=DOUBLE},
+      floor_base = #{record.floorBase,jdbcType=DOUBLE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.unionx.web.insurance.vo.RsInsuranceBase">
+    update rs_insurance_base
+    <set>
+      <if test="insuranceUuid != null">
+        insurance_uuid = #{insuranceUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="dictCode != null">
+        dict_code = #{dictCode,jdbcType=VARCHAR},
+      </if>
+      <if test="dictName != null">
+        dict_name = #{dictName,jdbcType=VARCHAR},
+      </if>
+      <if test="ceiling != null">
+        ceiling = #{ceiling,jdbcType=DOUBLE},
+      </if>
+      <if test="floor != null">
+        floor = #{floor,jdbcType=DOUBLE},
+      </if>
+      <if test="ceilingBase != null">
+        ceiling_base = #{ceilingBase,jdbcType=DOUBLE},
+      </if>
+      <if test="floorBase != null">
+        floor_base = #{floorBase,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.unionx.web.insurance.vo.RsInsuranceBase">
+    update rs_insurance_base
+    set insurance_uuid = #{insuranceUuid,jdbcType=VARCHAR},
+      dict_code = #{dictCode,jdbcType=VARCHAR},
+      dict_name = #{dictName,jdbcType=VARCHAR},
+      ceiling = #{ceiling,jdbcType=DOUBLE},
+      floor = #{floor,jdbcType=DOUBLE},
+      ceiling_base = #{ceilingBase,jdbcType=DOUBLE},
+      floor_base = #{floorBase,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

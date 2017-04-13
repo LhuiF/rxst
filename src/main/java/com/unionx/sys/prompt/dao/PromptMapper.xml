@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.unionx.sys.prompt.dao.PromptMapper">
+    <resultMap id="BaseResultMap" type="com.unionx.sys.prompt.vo.Prompt">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="update_datatime" jdbcType="TIMESTAMP" property="updateDatatime"/>
+        <result column="update_user_id" jdbcType="VARCHAR" property="updateUserId"/>
+    </resultMap>
+    <select id="getPromptById" resultMap="BaseResultMap">
+        SELECT
+            *
+        FROM
+             sys_prompt
+        WHERE            
+            id = #{id,jdbcType=VARCHAR}
+    </select>
+    
+    <select id="findAllPrompt" resultMap="BaseResultMap">
+          SELECT * FROM sys_prompt 
+    </select>
+    <!--根据 条件获得prompt对象-->
+    <select id="findPromptByCondition" resultMap="BaseResultMap">
+        SELECT * FROM sys_prompt as sp
+        <where>
+            <if test="name != null and name != '' ">
+                <bind name="promptName" value="'%' + name + '%'"></bind>
+                AND sp.name LIKE #{promptName}
+            </if>
+            <if test="code != null and code != '' ">
+                <bind name="code" value="'%' + code + '%'"></bind>
+                AND sp.code LIKE #{code}
+            </if>
+        </where>
+        ORDER BY update_datatime DESC
+    </select>
+    <select id="findPromptByConditionNoLike" resultMap="BaseResultMap">
+        SELECT * FROM sys_prompt as sp
+        <where>
+            <if test="name != null and name != '' ">
+                AND sp.name = #{name}
+            </if>
+            <if test="code != null and code != '' ">
+                AND sp.code = #{code}
+            </if>
+        </where>
+        ORDER BY update_datatime DESC
+    </select>
+    <delete id="deletePrompt">
+        DELETE
+        FROM
+             sys_prompt
+        WHERE            
+            id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="savePrompt" parameterType="com.unionx.sys.prompt.vo.Prompt" >
+        INSERT INTO sys_prompt
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="name != null" >
+                name,
+            </if>
+            <if test="code != null" >
+                code,
+            </if>
+            <if test="content != null" >
+                content,
+            </if>
+            <if test="updateDatatime != null" >
+                update_datatime,
+            </if>
+            <if test="updateUserId != null" >
+                update_user_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if> 
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if> 
+            <if test="code != null" >
+                #{code,jdbcType=VARCHAR},
+            </if> 
+            <if test="content != null" >
+                #{content,jdbcType=VARCHAR},
+            </if> 
+            <if test="updateDatatime != null" >
+                #{updateDatatime,jdbcType=TIMESTAMP},
+            </if> 
+            <if test="updateUserId != null" >
+                #{updateUserId,jdbcType=VARCHAR},
+            </if> 
+        </trim>
+    </insert>
+    <update id="updateContentAndName" parameterType="com.unionx.sys.prompt.vo.Prompt">
+        UPDATE sys_prompt SET name = #{name,jdbcType=VARCHAR},
+                content = #{content,jdbcType=VARCHAR},
+                update_datatime = #{updateDatatime,jdbcType=TIMESTAMP},
+                update_user_id = #{updateUserId,jdbcType=VARCHAR}
+        WHERE  id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updatePrompt" parameterType="com.unionx.sys.prompt.vo.Prompt" >
+        UPDATE sys_prompt
+        <set>
+            <if test="id != null" >
+                id = #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null" >
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null" >
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDatatime != null" >
+                update_datatime = #{updateDatatime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUserId != null" >
+                update_user_id = #{updateUserId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE 
+            id = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

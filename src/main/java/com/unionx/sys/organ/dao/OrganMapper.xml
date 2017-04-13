@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.unionx.sys.organ.dao.OrganMapper">
+    <resultMap id="BaseResultMap" type="com.unionx.sys.organ.vo.Organ">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="contact_person" jdbcType="VARCHAR" property="contactPerson"/>
+        <result column="tel" jdbcType="VARCHAR" property="tel"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="website" jdbcType="VARCHAR" property="website"/>
+        <result column="deleted" jdbcType="INTEGER" property="deleted"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="jianpin" jdbcType="VARCHAR" property="jianpin"/>
+        <result column="tier_code" jdbcType="VARCHAR" property="tierCode"/>
+        <result column="parent_id" jdbcType="VARCHAR" property="parentId"/>
+        <result column="order_no" jdbcType="INTEGER" property="orderNo"/>
+        <result column="update_datatime" jdbcType="TIMESTAMP" property="updateDatatime"/>
+        <result column="update_user_id" jdbcType="VARCHAR" property="updateUserId"/>
+        <result column="create_datatime" jdbcType="TIMESTAMP" property="createDatatime"/>
+    </resultMap>
+    <select id="getOrganById" resultMap="BaseResultMap">
+        SELECT
+            *
+        FROM
+             sys_organ
+        WHERE
+            id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findAllOrgan" resultMap="BaseResultMap">
+        SELECT * FROM sys_organ WHERE  deleted = 0 ORDER BY order_no
+    </select>
+    
+    <select id="findOrganTree"  resultMap="BaseResultMap" parameterType="Object">
+        SELECT * FROM sys_organ WHERE deleted = 0
+        <if test="name !=null and name !=''" >
+            <bind name="name" value="'%' + name + '%'"/>
+            AND name LIKE #{name, jdbcType=VARCHAR}
+        </if>
+        <if test="contactPerson !=null and contactPerson !=''" >
+            <bind name="contactPerson" value="'%' + contactPerson + '%'"/>
+            AND contact_person LIKE #{contactPerson, jdbcType=VARCHAR}
+        </if>
+        <if test="tel !=null and tel !=''" >
+            <bind name="tel" value="'%' + tel + '%'"/>
+            AND tel LIKE #{tel, jdbcType=VARCHAR}
+        </if>
+        ORDER BY order_no ASC,create_datatime ASC
+    </select>
+    
+    <select id="findChildrenMaxTierCode" parameterType="string" resultType="Long">
+         SELECT MAX(CONVERT(tier_code,UNSIGNED)) FROM sys_organ WHERE parent_id = #{pid,jdbcType=VARCHAR} AND deleted = 0
+    </select>
+
+    <!--根据机构编码查询机构-->
+    <select id="findOrganByCode" resultMap="BaseResultMap">
+        SELECT * FROM  sys_organ WHERE code=#{code} AND deleted = 0
+    </select>
+    <!--根据层级码查询机构列表-->
+    <select id="findOrganByTierCode" resultMap="BaseResultMap">
+        SELECT * FROM sys_organ WHERE
+        <bind name="tierCode" value="tierCode + '%'"/>
+         tier_code LIKE #{tierCode, jdbcType=VARCHAR}
+        AND sys_organ.deleted=0
+    </select>
+    <delete id="deleteOrgan">
+        DELETE
+        FROM
+             sys_organ
+        WHERE
+            id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="saveOrgan" parameterType="com.unionx.sys.organ.vo.Organ" >
+        INSERT INTO sys_organ
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="name != null" >
+                name,
+            </if>
+            <if test="code != null" >
+                code,
+            </if>
+            <if test="contactPerson != null" >
+                contact_person,
+            </if>
+            <if test="tel != null" >
+                tel,
+            </if>
+            <if test="remark != null" >
+                remark,
+            </if>
+            <if test="address != null" >
+                address,
+            </if>
+            <if test="website != null" >
+                website,
+            </if>
+            <if test="deleted != null" >
+                deleted,
+            </if>
+            <if test="type != null" >
+                type,
+            </if>
+            <if test="jianpin != null" >
+                jianpin,
+            </if>
+            <if test="tierCode != null" >
+                tier_code,
+            </if>
+            <if test="parentId != null" >
+                parent_id,
+            </if>
+            <if test="orderNo != null" >
+                order_no,
+            </if>
+            <if test="updateDatatime != null" >
+                update_datatime,
+            </if>
+            <if test="updateUserId != null" >
+                update_user_id,
+            </if>
+            <if test="createDatatime != null" >
+                create_datatime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null" >
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="contactPerson != null" >
+                #{contactPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null" >
+                #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null" >
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="website != null" >
+                #{website,jdbcType=VARCHAR},
+            </if>
+            <if test="deleted != null" >
+                #{deleted,jdbcType=INTEGER},
+            </if>
+            <if test="type != null" >
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="jianpin != null" >
+                #{jianpin,jdbcType=VARCHAR},
+            </if>
+            <if test="tierCode != null" >
+                #{tierCode,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null" >
+                #{parentId,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNo != null" >
+                #{orderNo,jdbcType=INTEGER},
+            </if>
+            <if test="updateDatatime != null" >
+                #{updateDatatime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUserId != null" >
+                #{updateUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="createDatatime != null" >
+                #{createDatatime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateOrgan" parameterType="com.unionx.sys.organ.vo.Organ" >
+        UPDATE sys_organ
+        <set>
+            <if test="id != null" >
+                id = #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null" >
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="contactPerson != null" >
+                contact_person = #{contactPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null" >
+                tel = #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null" >
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="website != null" >
+                website = #{website,jdbcType=VARCHAR},
+            </if>
+            <if test="deleted != null" >
+                deleted = #{deleted,jdbcType=INTEGER},
+            </if>
+            <if test="type != null" >
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="jianpin != null" >
+                jianpin = #{jianpin,jdbcType=VARCHAR},
+            </if>
+            <if test="tierCode != null" >
+                tier_code = #{tierCode,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null" >
+                parent_id = #{parentId,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNo != null" >
+                order_no = #{orderNo,jdbcType=INTEGER},
+            </if>
+            <if test="updateDatatime != null" >
+                update_datatime = #{updateDatatime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUserId != null" >
+                update_user_id = #{updateUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="createDatatime != null" >
+                create_datatime = #{createDatatime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        WHERE
+            id = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

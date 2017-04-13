@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.unionx.web.employee.dao.RsSsFundinfoMapper">
+  <resultMap id="BaseResultMap" type="com.unionx.web.employee.vo.SsFundinfo">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="employee_id" jdbcType="VARCHAR" property="employeeId" />
+    <result column="ss_people_type" jdbcType="VARCHAR" property="ssPeopleType" />
+    <result column="citizen_ID_code" jdbcType="VARCHAR" property="citizenIdCode" />
+    <result column="mt_people_type" jdbcType="VARCHAR" property="mtPeopleType" />
+    <result column="obtain_ss_way" jdbcType="VARCHAR" property="obtainSsWay" />
+    <result column="insured_tele" jdbcType="VARCHAR" property="insuredTele" />
+    <result column="issuance_sscard_date" jdbcType="TIMESTAMP" property="issuanceSscardDate" />
+    <result column="issuance_mtcard_date" jdbcType="TIMESTAMP" property="issuanceMtcardDate" />
+    <result column="bank_name" jdbcType="VARCHAR" property="bankName" />
+    <result column="bank_code" jdbcType="VARCHAR" property="bankCode" />
+    <result column="is_sick" jdbcType="VARCHAR" property="isSick" />
+    <result column="average_wage" jdbcType="DOUBLE" property="averageWage" />
+    <result column="ss_wage" jdbcType="DOUBLE" property="ssWage" />
+    <result column="pf_wage" jdbcType="DOUBLE" property="pfWage" />
+    <result column="ss_declare_date" jdbcType="TIMESTAMP" property="ssDeclareDate" />
+    <result column="pf_declare_date" jdbcType="TIMESTAMP" property="pfDeclareDate" />
+    <result column="ss_start_date" jdbcType="TIMESTAMP" property="ssStartDate" />
+    <result column="pf_start_date" jdbcType="TIMESTAMP" property="pfStartDate" />
+    <result column="add_reason" jdbcType="VARCHAR" property="addReason" />
+    <result column="designated1" jdbcType="VARCHAR" property="designated1" />
+    <result column="designated2" jdbcType="VARCHAR" property="designated2" />
+    <result column="designated3" jdbcType="VARCHAR" property="designated3" />
+    <result column="designated4" jdbcType="VARCHAR" property="designated4" />
+    <result column="designated5" jdbcType="VARCHAR" property="designated5" />
+    <result column="isdel" jdbcType="VARCHAR" property="isdel" />
+    <result column="create_name" jdbcType="VARCHAR" property="createName" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_name" jdbcType="VARCHAR" property="updateName" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, employee_id, ss_people_type, citizen_ID_code, mt_people_type, obtain_ss_way, 
+    insured_tele, issuance_sscard_date, issuance_mtcard_date, bank_name, bank_code, is_sick, 
+    average_wage, ss_wage, pf_wage, ss_declare_date, pf_declare_date, ss_start_date, 
+    pf_start_date, add_reason, designated1, designated2, designated3, designated4, designated5, 
+    isdel, create_name, create_date, update_name, update_date
+  </sql>
+  <select id="selectByExample" parameterType="com.unionx.web.employee.po.RsSsFundinfoCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from rs_ss_fundinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rs_ss_fundinfo
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from rs_ss_fundinfo
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.unionx.web.employee.po.RsSsFundinfoCriteria">
+    delete from rs_ss_fundinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.unionx.web.employee.vo.SsFundinfo">
+    insert into rs_ss_fundinfo (id, employee_id, ss_people_type, 
+      citizen_ID_code, mt_people_type, obtain_ss_way, 
+      insured_tele, issuance_sscard_date, issuance_mtcard_date, 
+      bank_name, bank_code, is_sick, 
+      average_wage, ss_wage, pf_wage, 
+      ss_declare_date, pf_declare_date, ss_start_date, 
+      pf_start_date, add_reason, designated1, 
+      designated2, designated3, designated4, 
+      designated5, isdel, create_name, 
+      create_date, update_name, update_date
+      )
+    values (#{id,jdbcType=VARCHAR}, #{employeeId,jdbcType=VARCHAR}, #{ssPeopleType,jdbcType=VARCHAR}, 
+      #{citizenIdCode,jdbcType=VARCHAR}, #{mtPeopleType,jdbcType=VARCHAR}, #{obtainSsWay,jdbcType=VARCHAR}, 
+      #{insuredTele,jdbcType=VARCHAR}, #{issuanceSscardDate,jdbcType=TIMESTAMP}, #{issuanceMtcardDate,jdbcType=TIMESTAMP}, 
+      #{bankName,jdbcType=VARCHAR}, #{bankCode,jdbcType=VARCHAR}, #{isSick,jdbcType=VARCHAR}, 
+      #{averageWage,jdbcType=DOUBLE}, #{ssWage,jdbcType=DOUBLE}, #{pfWage,jdbcType=DOUBLE}, 
+      #{ssDeclareDate,jdbcType=TIMESTAMP}, #{pfDeclareDate,jdbcType=TIMESTAMP}, #{ssStartDate,jdbcType=TIMESTAMP}, 
+      #{pfStartDate,jdbcType=TIMESTAMP}, #{addReason,jdbcType=VARCHAR}, #{designated1,jdbcType=VARCHAR}, 
+      #{designated2,jdbcType=VARCHAR}, #{designated3,jdbcType=VARCHAR}, #{designated4,jdbcType=VARCHAR}, 
+      #{designated5,jdbcType=VARCHAR}, #{isdel,jdbcType=VARCHAR}, #{createName,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{updateName,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.unionx.web.employee.vo.SsFundinfo">
+    insert into rs_ss_fundinfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="employeeId != null">
+        employee_id,
+      </if>
+      <if test="ssPeopleType != null">
+        ss_people_type,
+      </if>
+      <if test="citizenIdCode != null">
+        citizen_ID_code,
+      </if>
+      <if test="mtPeopleType != null">
+        mt_people_type,
+      </if>
+      <if test="obtainSsWay != null">
+        obtain_ss_way,
+      </if>
+      <if test="insuredTele != null">
+        insured_tele,
+      </if>
+      <if test="issuanceSscardDate != null">
+        issuance_sscard_date,
+      </if>
+      <if test="issuanceMtcardDate != null">
+        issuance_mtcard_date,
+      </if>
+      <if test="bankName != null">
+        bank_name,
+      </if>
+      <if test="bankCode != null">
+        bank_code,
+      </if>
+      <if test="isSick != null">
+        is_sick,
+      </if>
+      <if test="averageWage != null">
+        average_wage,
+      </if>
+      <if test="ssWage != null">
+        ss_wage,
+      </if>
+      <if test="pfWage != null">
+        pf_wage,
+      </if>
+      <if test="ssDeclareDate != null">
+        ss_declare_date,
+      </if>
+      <if test="pfDeclareDate != null">
+        pf_declare_date,
+      </if>
+      <if test="ssStartDate != null">
+        ss_start_date,
+      </if>
+      <if test="pfStartDate != null">
+        pf_start_date,
+      </if>
+      <if test="addReason != null">
+        add_reason,
+      </if>
+      <if test="designated1 != null">
+        designated1,
+      </if>
+      <if test="designated2 != null">
+        designated2,
+      </if>
+      <if test="designated3 != null">
+        designated3,
+      </if>
+      <if test="designated4 != null">
+        designated4,
+      </if>
+      <if test="designated5 != null">
+        designated5,
+      </if>
+      <if test="isdel != null">
+        isdel,
+      </if>
+      <if test="createName != null">
+        create_name,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateName != null">
+        update_name,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null">
+        #{employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="ssPeopleType != null">
+        #{ssPeopleType,jdbcType=VARCHAR},
+      </if>
+      <if test="citizenIdCode != null">
+        #{citizenIdCode,jdbcType=VARCHAR},
+      </if>
+      <if test="mtPeopleType != null">
+        #{mtPeopleType,jdbcType=VARCHAR},
+      </if>
+      <if test="obtainSsWay != null">
+        #{obtainSsWay,jdbcType=VARCHAR},
+      </if>
+      <if test="insuredTele != null">
+        #{insuredTele,jdbcType=VARCHAR},
+      </if>
+      <if test="issuanceSscardDate != null">
+        #{issuanceSscardDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="issuanceMtcardDate != null">
+        #{issuanceMtcardDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bankName != null">
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null">
+        #{bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isSick != null">
+        #{isSick,jdbcType=VARCHAR},
+      </if>
+      <if test="averageWage != null">
+        #{averageWage,jdbcType=DOUBLE},
+      </if>
+      <if test="ssWage != null">
+        #{ssWage,jdbcType=DOUBLE},
+      </if>
+      <if test="pfWage != null">
+        #{pfWage,jdbcType=DOUBLE},
+      </if>
+      <if test="ssDeclareDate != null">
+        #{ssDeclareDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pfDeclareDate != null">
+        #{pfDeclareDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ssStartDate != null">
+        #{ssStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pfStartDate != null">
+        #{pfStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addReason != null">
+        #{addReason,jdbcType=VARCHAR},
+      </if>
+      <if test="designated1 != null">
+        #{designated1,jdbcType=VARCHAR},
+      </if>
+      <if test="designated2 != null">
+        #{designated2,jdbcType=VARCHAR},
+      </if>
+      <if test="designated3 != null">
+        #{designated3,jdbcType=VARCHAR},
+      </if>
+      <if test="designated4 != null">
+        #{designated4,jdbcType=VARCHAR},
+      </if>
+      <if test="designated5 != null">
+        #{designated5,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null">
+        #{isdel,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.unionx.web.employee.po.RsSsFundinfoCriteria" resultType="java.lang.Long">
+    select count(*) from rs_ss_fundinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update rs_ss_fundinfo
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeId != null">
+        employee_id = #{record.employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ssPeopleType != null">
+        ss_people_type = #{record.ssPeopleType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.citizenIdCode != null">
+        citizen_ID_code = #{record.citizenIdCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mtPeopleType != null">
+        mt_people_type = #{record.mtPeopleType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obtainSsWay != null">
+        obtain_ss_way = #{record.obtainSsWay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insuredTele != null">
+        insured_tele = #{record.insuredTele,jdbcType=VARCHAR},
+      </if>
+      <if test="record.issuanceSscardDate != null">
+        issuance_sscard_date = #{record.issuanceSscardDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.issuanceMtcardDate != null">
+        issuance_mtcard_date = #{record.issuanceMtcardDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.bankName != null">
+        bank_name = #{record.bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankCode != null">
+        bank_code = #{record.bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isSick != null">
+        is_sick = #{record.isSick,jdbcType=VARCHAR},
+      </if>
+      <if test="record.averageWage != null">
+        average_wage = #{record.averageWage,jdbcType=DOUBLE},
+      </if>
+      <if test="record.ssWage != null">
+        ss_wage = #{record.ssWage,jdbcType=DOUBLE},
+      </if>
+      <if test="record.pfWage != null">
+        pf_wage = #{record.pfWage,jdbcType=DOUBLE},
+      </if>
+      <if test="record.ssDeclareDate != null">
+        ss_declare_date = #{record.ssDeclareDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pfDeclareDate != null">
+        pf_declare_date = #{record.pfDeclareDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ssStartDate != null">
+        ss_start_date = #{record.ssStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pfStartDate != null">
+        pf_start_date = #{record.pfStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.addReason != null">
+        add_reason = #{record.addReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.designated1 != null">
+        designated1 = #{record.designated1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.designated2 != null">
+        designated2 = #{record.designated2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.designated3 != null">
+        designated3 = #{record.designated3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.designated4 != null">
+        designated4 = #{record.designated4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.designated5 != null">
+        designated5 = #{record.designated5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isdel != null">
+        isdel = #{record.isdel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createName != null">
+        create_name = #{record.createName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateName != null">
+        update_name = #{record.updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateDate != null">
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update rs_ss_fundinfo
+    set id = #{record.id,jdbcType=VARCHAR},
+      employee_id = #{record.employeeId,jdbcType=VARCHAR},
+      ss_people_type = #{record.ssPeopleType,jdbcType=VARCHAR},
+      citizen_ID_code = #{record.citizenIdCode,jdbcType=VARCHAR},
+      mt_people_type = #{record.mtPeopleType,jdbcType=VARCHAR},
+      obtain_ss_way = #{record.obtainSsWay,jdbcType=VARCHAR},
+      insured_tele = #{record.insuredTele,jdbcType=VARCHAR},
+      issuance_sscard_date = #{record.issuanceSscardDate,jdbcType=TIMESTAMP},
+      issuance_mtcard_date = #{record.issuanceMtcardDate,jdbcType=TIMESTAMP},
+      bank_name = #{record.bankName,jdbcType=VARCHAR},
+      bank_code = #{record.bankCode,jdbcType=VARCHAR},
+      is_sick = #{record.isSick,jdbcType=VARCHAR},
+      average_wage = #{record.averageWage,jdbcType=DOUBLE},
+      ss_wage = #{record.ssWage,jdbcType=DOUBLE},
+      pf_wage = #{record.pfWage,jdbcType=DOUBLE},
+      ss_declare_date = #{record.ssDeclareDate,jdbcType=TIMESTAMP},
+      pf_declare_date = #{record.pfDeclareDate,jdbcType=TIMESTAMP},
+      ss_start_date = #{record.ssStartDate,jdbcType=TIMESTAMP},
+      pf_start_date = #{record.pfStartDate,jdbcType=TIMESTAMP},
+      add_reason = #{record.addReason,jdbcType=VARCHAR},
+      designated1 = #{record.designated1,jdbcType=VARCHAR},
+      designated2 = #{record.designated2,jdbcType=VARCHAR},
+      designated3 = #{record.designated3,jdbcType=VARCHAR},
+      designated4 = #{record.designated4,jdbcType=VARCHAR},
+      designated5 = #{record.designated5,jdbcType=VARCHAR},
+      isdel = #{record.isdel,jdbcType=VARCHAR},
+      create_name = #{record.createName,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      update_name = #{record.updateName,jdbcType=VARCHAR},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.unionx.web.employee.vo.SsFundinfo">
+    update rs_ss_fundinfo
+    <set>
+      <if test="employeeId != null">
+        employee_id = #{employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="ssPeopleType != null">
+        ss_people_type = #{ssPeopleType,jdbcType=VARCHAR},
+      </if>
+      <if test="citizenIdCode != null">
+        citizen_ID_code = #{citizenIdCode,jdbcType=VARCHAR},
+      </if>
+      <if test="mtPeopleType != null">
+        mt_people_type = #{mtPeopleType,jdbcType=VARCHAR},
+      </if>
+      <if test="obtainSsWay != null">
+        obtain_ss_way = #{obtainSsWay,jdbcType=VARCHAR},
+      </if>
+      <if test="insuredTele != null">
+        insured_tele = #{insuredTele,jdbcType=VARCHAR},
+      </if>
+      <if test="issuanceSscardDate != null">
+        issuance_sscard_date = #{issuanceSscardDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="issuanceMtcardDate != null">
+        issuance_mtcard_date = #{issuanceMtcardDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bankName != null">
+        bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null">
+        bank_code = #{bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isSick != null">
+        is_sick = #{isSick,jdbcType=VARCHAR},
+      </if>
+      <if test="averageWage != null">
+        average_wage = #{averageWage,jdbcType=DOUBLE},
+      </if>
+      <if test="ssWage != null">
+        ss_wage = #{ssWage,jdbcType=DOUBLE},
+      </if>
+      <if test="pfWage != null">
+        pf_wage = #{pfWage,jdbcType=DOUBLE},
+      </if>
+      <if test="ssDeclareDate != null">
+        ss_declare_date = #{ssDeclareDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pfDeclareDate != null">
+        pf_declare_date = #{pfDeclareDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ssStartDate != null">
+        ss_start_date = #{ssStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pfStartDate != null">
+        pf_start_date = #{pfStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addReason != null">
+        add_reason = #{addReason,jdbcType=VARCHAR},
+      </if>
+      <if test="designated1 != null">
+        designated1 = #{designated1,jdbcType=VARCHAR},
+      </if>
+      <if test="designated2 != null">
+        designated2 = #{designated2,jdbcType=VARCHAR},
+      </if>
+      <if test="designated3 != null">
+        designated3 = #{designated3,jdbcType=VARCHAR},
+      </if>
+      <if test="designated4 != null">
+        designated4 = #{designated4,jdbcType=VARCHAR},
+      </if>
+      <if test="designated5 != null">
+        designated5 = #{designated5,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null">
+        isdel = #{isdel,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        update_name = #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.unionx.web.employee.vo.SsFundinfo">
+    update rs_ss_fundinfo
+    set employee_id = #{employeeId,jdbcType=VARCHAR},
+      ss_people_type = #{ssPeopleType,jdbcType=VARCHAR},
+      citizen_ID_code = #{citizenIdCode,jdbcType=VARCHAR},
+      mt_people_type = #{mtPeopleType,jdbcType=VARCHAR},
+      obtain_ss_way = #{obtainSsWay,jdbcType=VARCHAR},
+      insured_tele = #{insuredTele,jdbcType=VARCHAR},
+      issuance_sscard_date = #{issuanceSscardDate,jdbcType=TIMESTAMP},
+      issuance_mtcard_date = #{issuanceMtcardDate,jdbcType=TIMESTAMP},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      bank_code = #{bankCode,jdbcType=VARCHAR},
+      is_sick = #{isSick,jdbcType=VARCHAR},
+      average_wage = #{averageWage,jdbcType=DOUBLE},
+      ss_wage = #{ssWage,jdbcType=DOUBLE},
+      pf_wage = #{pfWage,jdbcType=DOUBLE},
+      ss_declare_date = #{ssDeclareDate,jdbcType=TIMESTAMP},
+      pf_declare_date = #{pfDeclareDate,jdbcType=TIMESTAMP},
+      ss_start_date = #{ssStartDate,jdbcType=TIMESTAMP},
+      pf_start_date = #{pfStartDate,jdbcType=TIMESTAMP},
+      add_reason = #{addReason,jdbcType=VARCHAR},
+      designated1 = #{designated1,jdbcType=VARCHAR},
+      designated2 = #{designated2,jdbcType=VARCHAR},
+      designated3 = #{designated3,jdbcType=VARCHAR},
+      designated4 = #{designated4,jdbcType=VARCHAR},
+      designated5 = #{designated5,jdbcType=VARCHAR},
+      isdel = #{isdel,jdbcType=VARCHAR},
+      create_name = #{createName,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_name = #{updateName,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="deleByKey" parameterType="java.lang.String">
+    update rs_ss_fundinfo
+    set 
+      isdel = '1'
+    where employee_id = #{id}
+  </update>
+</mapper>

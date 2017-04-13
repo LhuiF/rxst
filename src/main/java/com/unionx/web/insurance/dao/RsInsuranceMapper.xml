@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.unionx.web.insurance.dao.RsInsuranceMapper">
+  <resultMap id="BaseResultMap" type="com.unionx.web.insurance.vo.RsInsurance">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="dict_code" jdbcType="VARCHAR" property="dictCode" />
+    <result column="dict_name" jdbcType="VARCHAR" property="dictName" />
+    <result column="insurance_year" jdbcType="VARCHAR" property="insuranceYear" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="check_month" jdbcType="VARCHAR" property="checkMonth" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="average_pay" jdbcType="DECIMAL" property="averagePay" />
+    <result column="isdel" jdbcType="BIT" property="isdel" />
+    <result column="create_name" jdbcType="VARCHAR" property="createName" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_name" jdbcType="VARCHAR" property="updateName" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="year_city" jdbcType="VARCHAR" property="yearCity" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, uuid, dict_code, dict_name, insurance_year, start_time, end_time, check_month, 
+    comment, average_pay, isdel, create_name, create_date, update_name, update_date, 
+    year_city
+  </sql>
+  <select id="selectByExample" parameterType="com.unionx.web.insurance.vo.RsInsuranceCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from rs_insurance
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rs_insurance
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from rs_insurance
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.unionx.web.insurance.vo.RsInsuranceCriteria">
+    delete from rs_insurance
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.unionx.web.insurance.vo.RsInsurance">
+    insert into rs_insurance (id, uuid, dict_code, 
+      dict_name, insurance_year, start_time, 
+      end_time, check_month, comment, 
+      average_pay, isdel, create_name, 
+      create_date, update_name, update_date, 
+      year_city)
+    values (#{id,jdbcType=INTEGER}, #{uuid,jdbcType=VARCHAR}, #{dictCode,jdbcType=VARCHAR}, 
+      #{dictName,jdbcType=VARCHAR}, #{insuranceYear,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{checkMonth,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, 
+      #{averagePay,jdbcType=DECIMAL}, #{isdel,jdbcType=BIT}, #{createName,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{updateName,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{yearCity,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.unionx.web.insurance.vo.RsInsurance">
+    insert into rs_insurance
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="dictCode != null">
+        dict_code,
+      </if>
+      <if test="dictName != null">
+        dict_name,
+      </if>
+      <if test="insuranceYear != null">
+        insurance_year,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="checkMonth != null">
+        check_month,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
+      <if test="averagePay != null">
+        average_pay,
+      </if>
+      <if test="isdel != null">
+        isdel,
+      </if>
+      <if test="createName != null">
+        create_name,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateName != null">
+        update_name,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="yearCity != null">
+        year_city,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uuid != null">
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="dictCode != null">
+        #{dictCode,jdbcType=VARCHAR},
+      </if>
+      <if test="dictName != null">
+        #{dictName,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceYear != null">
+        #{insuranceYear,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkMonth != null">
+        #{checkMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="averagePay != null">
+        #{averagePay,jdbcType=DECIMAL},
+      </if>
+      <if test="isdel != null">
+        #{isdel,jdbcType=BIT},
+      </if>
+      <if test="createName != null">
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="yearCity != null">
+        #{yearCity,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.unionx.web.insurance.vo.RsInsuranceCriteria" resultType="java.lang.Long">
+    select count(*) from rs_insurance
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update rs_insurance
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.uuid != null">
+        uuid = #{record.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dictCode != null">
+        dict_code = #{record.dictCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dictName != null">
+        dict_name = #{record.dictName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insuranceYear != null">
+        insurance_year = #{record.insuranceYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startTime != null">
+        start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null">
+        end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.checkMonth != null">
+        check_month = #{record.checkMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comment != null">
+        comment = #{record.comment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.averagePay != null">
+        average_pay = #{record.averagePay,jdbcType=DECIMAL},
+      </if>
+      <if test="record.isdel != null">
+        isdel = #{record.isdel,jdbcType=BIT},
+      </if>
+      <if test="record.createName != null">
+        create_name = #{record.createName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateName != null">
+        update_name = #{record.updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateDate != null">
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.yearCity != null">
+        year_city = #{record.yearCity,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update rs_insurance
+    set id = #{record.id,jdbcType=INTEGER},
+      uuid = #{record.uuid,jdbcType=VARCHAR},
+      dict_code = #{record.dictCode,jdbcType=VARCHAR},
+      dict_name = #{record.dictName,jdbcType=VARCHAR},
+      insurance_year = #{record.insuranceYear,jdbcType=VARCHAR},
+      start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      check_month = #{record.checkMonth,jdbcType=VARCHAR},
+      comment = #{record.comment,jdbcType=VARCHAR},
+      average_pay = #{record.averagePay,jdbcType=DECIMAL},
+      isdel = #{record.isdel,jdbcType=BIT},
+      create_name = #{record.createName,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      update_name = #{record.updateName,jdbcType=VARCHAR},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      year_city = #{record.yearCity,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.unionx.web.insurance.vo.RsInsurance">
+    update rs_insurance
+    <set>
+      <if test="uuid != null">
+        uuid = #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="dictCode != null">
+        dict_code = #{dictCode,jdbcType=VARCHAR},
+      </if>
+      <if test="dictName != null">
+        dict_name = #{dictName,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceYear != null">
+        insurance_year = #{insuranceYear,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkMonth != null">
+        check_month = #{checkMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="averagePay != null">
+        average_pay = #{averagePay,jdbcType=DECIMAL},
+      </if>
+      <if test="isdel != null">
+        isdel = #{isdel,jdbcType=BIT},
+      </if>
+      <if test="createName != null">
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        update_name = #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="yearCity != null">
+        year_city = #{yearCity,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.unionx.web.insurance.vo.RsInsurance">
+    update rs_insurance
+    set uuid = #{uuid,jdbcType=VARCHAR},
+      dict_code = #{dictCode,jdbcType=VARCHAR},
+      dict_name = #{dictName,jdbcType=VARCHAR},
+      insurance_year = #{insuranceYear,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      check_month = #{checkMonth,jdbcType=VARCHAR},
+      comment = #{comment,jdbcType=VARCHAR},
+      average_pay = #{averagePay,jdbcType=DECIMAL},
+      isdel = #{isdel,jdbcType=BIT},
+      create_name = #{createName,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_name = #{updateName,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      year_city = #{yearCity,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="countByCityyear" parameterType="java.util.HashMap"  resultType="java.lang.Long">
+    select count(*) from rs_insurance
+    where 1=1 and dict_code=  #{dictCode,jdbcType=VARCHAR} and insurance_year=#{insuranceYear,jdbcType=VARCHAR}
+  </select>
+</mapper>

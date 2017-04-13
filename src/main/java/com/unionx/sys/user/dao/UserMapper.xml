@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.unionx.sys.user.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.unionx.sys.user.vo.User">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="login_name" jdbcType="VARCHAR" property="loginName"/>
+        <result column="organ_id" jdbcType="VARCHAR" property="organId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+        <result column="sex" jdbcType="VARCHAR" property="sex"/>
+        <result column="birthday" jdbcType="VARCHAR" property="birthday"/>
+        <result column="position" jdbcType="VARCHAR" property="position"/>
+        <result column="post" jdbcType="VARCHAR" property="post"/>
+        <result column="postName" jdbcType="VARCHAR" property="postName"/>
+        <result column="tel" jdbcType="VARCHAR" property="tel"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="leader" jdbcType="INTEGER" property="leader"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="order_no" jdbcType="INTEGER" property="orderNo"/>
+        <result column="deleted" jdbcType="INTEGER" property="deleted"/>
+        <result column="update_datatime" jdbcType="TIMESTAMP" property="updateDatatime"/>
+        <result column="update_user_id" jdbcType="VARCHAR" property="updateUserId"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="age" jdbcType="INTEGER" property="age"/>
+        <result column="paper_type" jdbcType="VARCHAR" property="paperType"/>
+        <result column="paper_code" jdbcType="VARCHAR" property="paperCode"/>
+        <result column="is_marry" jdbcType="INTEGER" property="isMarry"/>
+        <result column="nation" jdbcType="VARCHAR" property="nation"/>
+        <result column="province" jdbcType="VARCHAR" property="province"/>
+        <result column="city" jdbcType="VARCHAR" property="city"/>
+        <result column="area" jdbcType="VARCHAR" property="area"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="qq" jdbcType="INTEGER" property="qq"/>
+        <result column="icon" jdbcType="VARCHAR" property="icon"/>
+    </resultMap>
+
+
+    <select id="getUserByMenberId" resultMap="BaseResultMap">
+        SELECT * FROM sys_user
+        WHERE id = (SELECT sysuser_id
+        FROM sysuser_mem_relation
+        WHERE member_id = #{memberId,jdbcType=VARCHAR}
+        AND post = #{post,jdbcType=VARCHAR}
+        <if test="isOperation != null" >
+            AND is_operation = #{isOperation,jdbcType=INTEGER}
+        </if>
+        )
+    </select>
+
+    <!--根据岗位编码返回该岗位用户列表 abner-->
+    <select id="getUserListByPost" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM
+        sys_user
+        WHERE
+        `post` = #{post,jdbcType=VARCHAR}
+        AND
+        deleted = '0'
+    </select>
+
+    <!--根据用户id查询用户信息 abner-->
+    <select id="getUser" resultMap="BaseResultMap">
+        SELECT su.*,sdi.name AS postName
+        FROM sys_user su
+        JOIN sys_dict_item sdi
+        ON su.post = sdi.code
+        WHERE su.id = #{userId,jdbcType=VARCHAR}
+        AND su.deleted = '0' AND sdi.data_dict_code = '1003'
+    </select>
+
+    <select id="getUserById" resultMap="BaseResultMap">
+        SELECT
+            *
+        FROM
+             sys_user
+        WHERE            
+            id = #{id,jdbcType=VARCHAR}
+    </select>
+    <!-- 查询用户管理数据 -->
+    <select id="findAllUser" resultMap="BaseResultMap">
+          SELECT * FROM sys_user where deleted ='0'
+    </select>
+
+
+    <insert id="saveUser" parameterType="com.unionx.sys.user.dao.UserMapper" >
+        INSERT INTO sys_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="loginName != null" >
+                login_name,
+            </if>
+            <if test="organId != null" >
+                organ_id,
+            </if>
+            <if test="name != null" >
+                name,
+            </if>
+            <if test="nickname != null" >
+                nickname,
+            </if>
+            <if test="sex != null" >
+                sex,
+            </if>
+            <if test="birthday != null" >
+                birthday,
+            </if>
+            <if test="position != null" >
+                position,
+            </if>
+            <if test="post != null" >
+                post,
+            </if>
+            <if test="tel != null" >
+                tel,
+            </if>
+            <if test="email != null" >
+                email,
+            </if>
+            <if test="leader != null" >
+                leader,
+            </if>
+            <if test="remark != null" >
+                remark,
+            </if>
+            <if test="orderNo != null" >
+                order_no,
+            </if>
+            <if test="deleted != null" >
+                deleted,
+            </if>
+            <if test="updateDatatime != null" >
+                update_datatime,
+            </if>
+            <if test="updateUserId != null" >
+                update_user_id,
+            </if>
+            <if test="phone != null" >
+                phone,
+            </if>
+            <if test="age != null" >
+                age,
+            </if>
+            <if test="paperType != null" >
+                paper_type,
+            </if>
+            <if test="paperCode != null" >
+                paper_code,
+            </if>
+            <if test="isMarry != null" >
+                is_marry,
+            </if>
+            <if test="nation != null" >
+                nation,
+            </if>
+            <if test="province != null" >
+                province,
+            </if>
+            <if test="city != null" >
+                city,
+            </if>
+            <if test="area != null" >
+                area,
+            </if>
+            <if test="address != null" >
+                address,
+            </if>
+            <if test="qq != null" >
+                qq,
+            </if>
+            <if test="icon != null">
+                icon,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="loginName != null" >
+                #{loginName,jdbcType=VARCHAR},
+            </if>
+            <if test="organId != null" >
+                #{organId,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null" >
+                #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null" >
+                #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null" >
+                #{birthday,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null" >
+                #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="post != null" >
+                #{post,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null" >
+                #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null" >
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="leader != null" >
+                #{leader,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null" >
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNo != null" >
+                #{orderNo,jdbcType=INTEGER},
+            </if>
+            <if test="deleted != null" >
+                #{deleted,jdbcType=INTEGER},
+            </if>
+            <if test="updateDatatime != null" >
+                #{updateDatatime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUserId != null" >
+                #{updateUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null" >
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null" >
+                #{age,jdbcType=INTEGER},
+            </if>
+            <if test="paperType != null" >
+                #{paperType,jdbcType=VARCHAR},
+            </if>
+            <if test="paperCode != null" >
+                #{paperCode,jdbcType=VARCHAR},
+            </if>
+            <if test="isMarry != null" >
+                #{isMarry,jdbcType=INTEGER},
+            </if>
+            <if test="nation != null" >
+                #{nation,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null" >
+                #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null" >
+                #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="area != null" >
+                #{area,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null" >
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="qq != null" >
+                #{qq,jdbcType=INTEGER},
+            </if>
+            <if test="icon != null">
+                #{icon,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateUser" parameterType="com.unionx.sys.user.dao.UserMapper" >
+        UPDATE sys_user
+        <set>
+            <if test="id != null" >
+                id = #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="loginName != null" >
+                login_name = #{loginName,jdbcType=VARCHAR},
+            </if>
+            <if test="organId != null" >
+                organ_id = #{organId,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null" >
+                nickname = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null" >
+                sex = #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null" >
+                birthday = #{birthday,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null" >
+                position = #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="post != null" >
+                post = #{post,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null" >
+                tel = #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null" >
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="leader != null" >
+                leader = #{leader,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNo != null" >
+                order_no = #{orderNo,jdbcType=INTEGER},
+            </if>
+            <if test="deleted != null" >
+                deleted = #{deleted,jdbcType=INTEGER},
+            </if>
+            <if test="updateDatatime != null" >
+                update_datatime = #{updateDatatime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUserId != null" >
+                update_user_id = #{updateUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null" >
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null" >
+                age = #{age,jdbcType=INTEGER},
+            </if>
+            <if test="paperType != null" >
+                paper_type = #{paperType,jdbcType=VARCHAR},
+            </if>
+            <if test="paperCode != null" >
+                paper_code = #{paperCode,jdbcType=VARCHAR},
+            </if>
+            <if test="isMarry != null" >
+                is_marry = #{isMarry,jdbcType=INTEGER},
+            </if>
+            <if test="nation != null" >
+                nation = #{nation,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null" >
+                province = #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null" >
+                city = #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="area != null" >
+                area = #{area,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null" >
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="qq != null" >
+                qq = #{qq,jdbcType=INTEGER},
+            </if>
+            <if test="icon != null">
+                icon = #{icon,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE
+        id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <!-- 查询用户管理数据 -->
+    <select id="getUserList" resultMap="BaseResultMap">
+        SELECT * FROM sys_user where deleted ='0'
+        <if test="loginName != null and loginName != '' " >
+            <bind name="likeLoginName" value="'%' + loginName + '%'"/>
+            and login_name like #{likeLoginName, jdbcType=VARCHAR}
+        </if>
+        <if test="name != null and name != ''" >
+            <bind name="likeName" value="'%' + name + '%'"/>
+            and `name` like #{likeName, jdbcType=VARCHAR}
+        </if>
+        <if test="phone != null and phone != ''" >
+            <bind name="likeTel" value="'%' + phone + '%'"/>
+            and phone like #{likeTel, jdbcType=VARCHAR}
+        </if>
+        ORDER BY update_datatime DESC
+    </select>
+
+
+
+  <!--修改用户删除状态-->
+    <select id="deleteUser"  parameterType="Object" >
+        UPDATE sys_user set deleted = '1'
+        WHERE   id = #{id,jdbcType=VARCHAR}
+    </select>
+
+
+
+    <!-- 根据机构id查询用户列表-->
+    <select id="findUserListByOrgan" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT * FROM sys_user where deleted ='0'
+        AND organ_id=#{organId}
+    </select>
+
+
+    <!-- 根据一龄用户id 查询店家表是否有该字段存在-->
+    <select id="findByUserToStore" resultType="java.lang.String" parameterType="Object" >
+       SELECT sys_user_id from sysuser_store_relation
+       where
+           sys_user_id = #{id,jdbcType=VARCHAR}
+           limit 1
+    </select>
+  <!--  获取岗位为接待人员列表-->
+    <select id="findByUserReceiver" resultMap="BaseResultMap">
+        SELECT `id`,`name`,login_name FROM  sys_user WHERE deleted = '0' AND post=#{postId,jdbcType=VARCHAR}
+    </select>
+   <!-- 查询手诊专家名称-->
+    <select id="getFirstExpertName" resultType="java.lang.String" parameterType="Object">
+        select `name` from sys_user
+        WHERE  id = #{userId,jdbcType=VARCHAR} AND deleted ='0'
+    </select>
+
+    <select id="findIsLeader" resultMap="BaseResultMap"  parameterType="Object">
+        SELECT * FROM sys_user where organ_id=#{organId} and leader=1  AND deleted ='0' limit 1
+    </select>
+
+    <select id="getStoreUserPhoneById" resultType="java.lang.String">
+        SELECT phone FROM store_user_info WHERE id = #{userId,jdbcType=VARCHAR}
+    </select>
+</mapper>

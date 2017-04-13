@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.unionx.web.employee.dao.RsFiveRisksMapper">
+  <resultMap id="BaseResultMap" type="com.unionx.web.employee.vo.FiveRisks">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="pension" jdbcType="VARCHAR" property="pension" />
+    <result column="unemployment" jdbcType="VARCHAR" property="unemployment" />
+    <result column="fertility" jdbcType="VARCHAR" property="fertility" />
+    <result column="work_injury" jdbcType="VARCHAR" property="workInjury" />
+    <result column="medical_treatment" jdbcType="VARCHAR" property="medicalTreatment" />
+    <result column="provident_fund" jdbcType="VARCHAR" property="providentFund" />
+    <result column="employee_id" jdbcType="VARCHAR" property="employeeId" />
+    <result column="isdel" jdbcType="VARCHAR" property="isdel" />
+    <result column="create_name" jdbcType="VARCHAR" property="createName" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_name" jdbcType="VARCHAR" property="updateName" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, pension, unemployment, fertility, work_injury, medical_treatment, provident_fund, 
+    employee_id, isdel, create_name, create_date, update_name, update_date
+  </sql>
+  <select id="selectByExample" parameterType="com.unionx.web.employee.po.RsFiveRisksCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from rs_five_risks
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rs_five_risks
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from rs_five_risks
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.unionx.web.employee.po.RsFiveRisksCriteria">
+    delete from rs_five_risks
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.unionx.web.employee.vo.FiveRisks">
+    insert into rs_five_risks (id, pension, unemployment, 
+      fertility, work_injury, medical_treatment, 
+      provident_fund, employee_id, isdel, 
+      create_name, create_date, update_name, 
+      update_date)
+    values (#{id,jdbcType=VARCHAR}, #{pension,jdbcType=VARCHAR}, #{unemployment,jdbcType=VARCHAR}, 
+      #{fertility,jdbcType=VARCHAR}, #{workInjury,jdbcType=VARCHAR}, #{medicalTreatment,jdbcType=VARCHAR}, 
+      #{providentFund,jdbcType=VARCHAR}, #{employeeId,jdbcType=VARCHAR}, #{isdel,jdbcType=VARCHAR}, 
+      #{createName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateName,jdbcType=VARCHAR}, 
+      #{updateDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.unionx.web.employee.vo.FiveRisks">
+    insert into rs_five_risks
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="pension != null">
+        pension,
+      </if>
+      <if test="unemployment != null">
+        unemployment,
+      </if>
+      <if test="fertility != null">
+        fertility,
+      </if>
+      <if test="workInjury != null">
+        work_injury,
+      </if>
+      <if test="medicalTreatment != null">
+        medical_treatment,
+      </if>
+      <if test="providentFund != null">
+        provident_fund,
+      </if>
+      <if test="employeeId != null">
+        employee_id,
+      </if>
+      <if test="isdel != null">
+        isdel,
+      </if>
+      <if test="createName != null">
+        create_name,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateName != null">
+        update_name,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="pension != null">
+        #{pension,jdbcType=VARCHAR},
+      </if>
+      <if test="unemployment != null">
+        #{unemployment,jdbcType=VARCHAR},
+      </if>
+      <if test="fertility != null">
+        #{fertility,jdbcType=VARCHAR},
+      </if>
+      <if test="workInjury != null">
+        #{workInjury,jdbcType=VARCHAR},
+      </if>
+      <if test="medicalTreatment != null">
+        #{medicalTreatment,jdbcType=VARCHAR},
+      </if>
+      <if test="providentFund != null">
+        #{providentFund,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null">
+        #{employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null">
+        #{isdel,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.unionx.web.employee.po.RsFiveRisksCriteria" resultType="java.lang.Long">
+    select count(*) from rs_five_risks
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update rs_five_risks
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pension != null">
+        pension = #{record.pension,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unemployment != null">
+        unemployment = #{record.unemployment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fertility != null">
+        fertility = #{record.fertility,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workInjury != null">
+        work_injury = #{record.workInjury,jdbcType=VARCHAR},
+      </if>
+      <if test="record.medicalTreatment != null">
+        medical_treatment = #{record.medicalTreatment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.providentFund != null">
+        provident_fund = #{record.providentFund,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeId != null">
+        employee_id = #{record.employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isdel != null">
+        isdel = #{record.isdel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createName != null">
+        create_name = #{record.createName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateName != null">
+        update_name = #{record.updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateDate != null">
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update rs_five_risks
+    set id = #{record.id,jdbcType=VARCHAR},
+      pension = #{record.pension,jdbcType=VARCHAR},
+      unemployment = #{record.unemployment,jdbcType=VARCHAR},
+      fertility = #{record.fertility,jdbcType=VARCHAR},
+      work_injury = #{record.workInjury,jdbcType=VARCHAR},
+      medical_treatment = #{record.medicalTreatment,jdbcType=VARCHAR},
+      provident_fund = #{record.providentFund,jdbcType=VARCHAR},
+      employee_id = #{record.employeeId,jdbcType=VARCHAR},
+      isdel = #{record.isdel,jdbcType=VARCHAR},
+      create_name = #{record.createName,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      update_name = #{record.updateName,jdbcType=VARCHAR},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.unionx.web.employee.vo.FiveRisks">
+    update rs_five_risks
+    <set>
+      <if test="pension != null">
+        pension = #{pension,jdbcType=VARCHAR},
+      </if>
+      <if test="unemployment != null">
+        unemployment = #{unemployment,jdbcType=VARCHAR},
+      </if>
+      <if test="fertility != null">
+        fertility = #{fertility,jdbcType=VARCHAR},
+      </if>
+      <if test="workInjury != null">
+        work_injury = #{workInjury,jdbcType=VARCHAR},
+      </if>
+      <if test="medicalTreatment != null">
+        medical_treatment = #{medicalTreatment,jdbcType=VARCHAR},
+      </if>
+      <if test="providentFund != null">
+        provident_fund = #{providentFund,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null">
+        employee_id = #{employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null">
+        isdel = #{isdel,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        update_name = #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.unionx.web.employee.vo.FiveRisks">
+    update rs_five_risks
+    set pension = #{pension,jdbcType=VARCHAR},
+      unemployment = #{unemployment,jdbcType=VARCHAR},
+      fertility = #{fertility,jdbcType=VARCHAR},
+      work_injury = #{workInjury,jdbcType=VARCHAR},
+      medical_treatment = #{medicalTreatment,jdbcType=VARCHAR},
+      provident_fund = #{providentFund,jdbcType=VARCHAR},
+      employee_id = #{employeeId,jdbcType=VARCHAR},
+      isdel = #{isdel,jdbcType=VARCHAR},
+      create_name = #{createName,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_name = #{updateName,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+   <update id="deleByKey" parameterType="java.lang.String">
+    update rs_five_risks
+    set 
+      isdel = '1'
+    where employee_id = #{id}
+  </update>
+</mapper>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.unionx.sys.role.dao.RoleAuthMapper">
+    <resultMap id="BaseResultMap" type="com.unionx.sys.role.vo.RoleAuth">
+        <id column="role_id" jdbcType="VARCHAR" property="roleId"/>
+        <id column="module_code" jdbcType="VARCHAR" property="moduleCode"/>
+        <result column="update_datatime" jdbcType="TIMESTAMP" property="updateDatatime"/>
+        <result column="update_user_id" jdbcType="VARCHAR" property="updateUserId"/>
+    </resultMap>
+    <select id="getRoleAuthById" resultMap="BaseResultMap">
+        SELECT
+            *
+        FROM
+             sys_role_auth
+        WHERE            
+            module_code = #{moduleCode,jdbcType=VARCHAR}
+        AND role_id = #{roleId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findAllRoleAuth" resultMap="BaseResultMap">
+          SELECT * FROM sys_role_auth 
+    </select>
+    
+    <delete id="deleteRoleAuth">
+        DELETE
+        FROM
+             sys_role_auth
+        WHERE            
+            module_code = #{moduleCode,jdbcType=VARCHAR}
+        AND role_id = #{roleId,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteByRoleId">
+        DELETE
+        FROM
+        sys_role_auth
+        WHERE
+         role_id = #{roleId,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="saveRoleAuth" parameterType="com.unionx.sys.role.vo.RoleAuth" >
+        INSERT INTO sys_role_auth
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="roleId != null" >
+                role_id,
+            </if>
+            <if test="moduleCode != null" >
+                module_code,
+            </if>
+            <if test="updateDatatime != null" >
+                update_datatime,
+            </if>
+            <if test="updateUserId != null" >
+                update_user_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="roleId != null" >
+                #{roleId,jdbcType=VARCHAR},
+            </if> 
+            <if test="moduleCode != null" >
+                #{moduleCode,jdbcType=VARCHAR},
+            </if> 
+            <if test="updateDatatime != null" >
+                #{updateDatatime,jdbcType=TIMESTAMP},
+            </if> 
+            <if test="updateUserId != null" >
+                #{updateUserId,jdbcType=VARCHAR},
+            </if> 
+        </trim>
+    </insert>
+
+    <update id="updateRoleAuth" parameterType="com.unionx.sys.role.vo.RoleAuth" >
+        UPDATE sys_role_auth
+        <set>
+            <if test="roleId != null" >
+                role_id = #{roleId,jdbcType=VARCHAR},
+            </if>
+            <if test="moduleCode != null" >
+                module_code = #{moduleCode,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDatatime != null" >
+                update_datatime = #{updateDatatime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUserId != null" >
+                update_user_id = #{updateUserId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE 
+            module_code = #{moduleCode,jdbcType=VARCHAR}
+        AND role_id = #{roleId,jdbcType=VARCHAR}
+    </update>
+</mapper>

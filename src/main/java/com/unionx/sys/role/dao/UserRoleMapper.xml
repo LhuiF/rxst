@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.unionx.sys.role.dao.UserRoleMapper">
+    <resultMap id="BaseResultMap" type="com.unionx.sys.role.vo.UserRole">
+        <id column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <id column="role_id" jdbcType="VARCHAR" property="roleId"/>
+        <result column="update_datatime" jdbcType="TIMESTAMP" property="updateDatatime"/>
+        <result column="update_user_id" jdbcType="VARCHAR" property="updateUserId"/>
+    </resultMap>
+    <select id="getUserRoleById" resultMap="BaseResultMap">
+        SELECT
+            *
+        FROM
+             sys_user_role
+        WHERE            
+            role_id = #{roleId,jdbcType=VARCHAR}
+        AND user_id = #{userId,jdbcType=VARCHAR}
+    </select>
+    
+    <select id="findAllUserRole" resultMap="BaseResultMap">
+          SELECT * FROM sys_user_role 
+    </select>
+
+    <!--根据roleId获得用户-->
+    <select id="getSysUserByRoleId" parameterType="String" resultMap="BaseResultMap">
+        SELECT * FROM sys_user_role sur WHERE  sur.role_id = #{roleId}
+    </select>
+
+    <delete id="deleteUserRole">
+        DELETE
+        FROM
+             sys_user_role
+        WHERE            
+        user_id = #{userId,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="saveUserRole" parameterType="com.unionx.sys.role.vo.UserRole" >
+        INSERT INTO sys_user_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null" >
+                user_id,
+            </if>
+            <if test="roleId != null" >
+                role_id,
+            </if>
+            <if test="updateDatatime != null" >
+                update_datatime,
+            </if>
+            <if test="updateUserId != null" >
+                update_user_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null" >
+                #{userId,jdbcType=VARCHAR},
+            </if> 
+            <if test="roleId != null" >
+                #{roleId,jdbcType=VARCHAR},
+            </if> 
+            <if test="updateDatatime != null" >
+                #{updateDatatime,jdbcType=TIMESTAMP},
+            </if> 
+            <if test="updateUserId != null" >
+                #{updateUserId,jdbcType=VARCHAR},
+            </if> 
+        </trim>
+    </insert>
+
+    <update id="updateUserRole" parameterType="com.unionx.sys.role.vo.UserRole" >
+        UPDATE sys_user_role
+        <set>
+            <if test="userId != null" >
+                user_id = #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="roleId != null" >
+                role_id = #{roleId,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDatatime != null" >
+                update_datatime = #{updateDatatime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUserId != null" >
+                update_user_id = #{updateUserId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE 
+            role_id = #{roleId,jdbcType=VARCHAR}
+        AND user_id = #{userId,jdbcType=VARCHAR}
+    </update>
+
+    <!--通过userId 查询所属的roleId-->
+    <select id="findByRoleList" resultType="java.lang.String" parameterType="object">
+        select role_id from sys_user_role where user_id=#{userId,jdbcType=VARCHAR};
+    </select>
+</mapper>
